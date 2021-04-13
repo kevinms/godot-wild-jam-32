@@ -1,0 +1,8 @@
+# Godot-specific ignores
+.import/
+
+# vim
+*.sw[op]
+
+# Blender
+*.blend1

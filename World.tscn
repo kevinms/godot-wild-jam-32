@@ -1,0 +1,81 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Camera.gd" type="Script" id=1]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Building.tscn" type="PackedScene" id=3]
+[ext_resource path="res://assets/rain/drop.png" type="Texture" id=4]
+[ext_resource path="res://Rain.gd" type="Script" id=5]
+[ext_resource path="res://GloomyWorld.tres" type="Environment" id=6]
+[ext_resource path="res://Plant.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Drone.tscn" type="PackedScene" id=8]
+
+[sub_resource type="ParticlesMaterial" id=1]
+emission_shape = 2
+emission_box_extents = Vector3( 50, 50, 10 )
+direction = Vector3( 0, 0, -1 )
+spread = 0.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 70.0
+
+[sub_resource type="SpatialMaterial" id=2]
+flags_transparent = true
+flags_unshaded = true
+params_cull_mode = 2
+params_billboard_mode = 2
+albedo_texture = ExtResource( 4 )
+
+[sub_resource type="PlaneMesh" id=3]
+material = SubResource( 2 )
+size = Vector2( 1, 1 )
+
+[node name="World" type="Spatial"]
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.62932, 0.777146, 0, -0.777146, 0.62932, 0, 27.455, 22.2326 )
+current = true
+script = ExtResource( 1 )
+target_path = NodePath("../Player")
+distance = 35.328
+angle_degrees = 51.0
+
+[node name="Building" parent="." instance=ExtResource( 3 )]
+
+[node name="Building2" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.14597, 0, -53.7952 )
+
+[node name="Building3" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 48.5284, 0, -20.9446 )
+
+[node name="Building4" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -46.4749, -3.8147e-06, -34.5725 )
+
+[node name="Rain" type="Particles" parent="."]
+transform = Transform( 1, 0, 0, 0, -2.98023e-08, 1, 0, -1, -2.98023e-08, 0, 32.4716, -3.8147e-06 )
+amount = 250
+visibility_aabb = AABB( -47.45, -46.61, -71.8189, 100, 100, 134.422 )
+local_coords = false
+process_material = SubResource( 1 )
+draw_pass_1 = SubResource( 3 )
+script = ExtResource( 5 )
+
+[node name="Plant" parent="." instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -8.19585, -0.758115, 0 )
+
+[node name="Plant2" parent="." instance=ExtResource( 7 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.28071, -0.880475, 0 )
+
+[node name="Drone" parent="." instance=ExtResource( 8 )]
+transform = Transform( 0.891513, 1.9801e-08, 0.452995, -1.9801e-08, 1, -4.74212e-09, -0.452995, -4.74212e-09, 0.891513, -9.58463, 2.17859, -12.9199 )
+
+[node name="Drone2" parent="." instance=ExtResource( 8 )]
+transform = Transform( 0.785652, -2.70429e-08, -0.618669, 2.70429e-08, 1, -9.36946e-09, 0.618669, -9.36946e-09, 0.785652, 8.32073, 2.17859, -13.6923 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 48.6215, 0 )
+light_energy = 0.5
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource( 6 )
