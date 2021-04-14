@@ -8,12 +8,11 @@ onready var mi: MeshInstance = $MeshInstance
 onready var sm: SpatialMaterial = mi.get_active_material(0)
 onready var start_pos = global_transform.origin
 
-var dead: bool = false
+var dead: bool
 
 func _ready():
-	$Fire.stream = AudioLibrary.random(AudioLibrary.player_laser_sounds)
+	$Fire.stream = AudioLibrary.random(AudioLibrary.drone_laser_sounds)
 	$Fire.play()
-	$MuzzleFlash.emitting = true
 
 func set_color(value):
 	color = value
@@ -36,11 +35,8 @@ func _process(delta):
 	global_translate(velocity * delta)
 
 func _on_Laser_body_entered(body):
-	if body.is_in_group("plant"):
-		#var drone = body.get_parent()
-		#drone.health -= 1
-		#get_parent().remove_child(self)
-		#body.add_child(self)
+	if body.is_in_group("player"):
+		Global.damage_player(1)
 		$MeshInstance.hide()
 		$ExplosionParticles.emitting = true
 		$ExplosionTimer.start()
@@ -48,7 +44,6 @@ func _on_Laser_body_entered(body):
 		dead = true
 	else:
 		print(body.get_path())
-
 
 func _on_ExplosionTimer_timeout():
 	queue_free()

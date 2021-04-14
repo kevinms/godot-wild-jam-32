@@ -53,6 +53,7 @@ script = ExtResource( 1 )
 [node name="StaticBody" type="StaticBody" parent="." groups=[
 "plant",
 ]]
+collision_layer = 65
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody"]
 shape = SubResource( 1 )
