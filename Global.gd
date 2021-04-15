@@ -1,8 +1,9 @@
 extends Node
 
 var rain_acidity_per_sec: float = 1.0
+var rain_ph: float = 2.0
 
-var health: float = 10
+var health: float = 50
 
 signal player_damaged(damage)
 

@@ -1,13 +1,14 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Camera.gd" type="Script" id=1]
-[ext_resource path="res://Player.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Building.tscn" type="PackedScene" id=3]
+[ext_resource path="res://player/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://building/Building.tscn" type="PackedScene" id=3]
 [ext_resource path="res://assets/rain/drop.png" type="Texture" id=4]
-[ext_resource path="res://Rain.gd" type="Script" id=5]
-[ext_resource path="res://GloomyWorld.tres" type="Environment" id=6]
-[ext_resource path="res://Plant.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Drone.tscn" type="PackedScene" id=8]
+[ext_resource path="res://rain/Rain.gd" type="Script" id=5]
+[ext_resource path="res://environment/GloomyWorld.tres" type="Environment" id=6]
+[ext_resource path="res://plant/Plant.tscn" type="PackedScene" id=7]
+[ext_resource path="res://drone/Drone.tscn" type="PackedScene" id=8]
+[ext_resource path="res://hud/HUD.tscn" type="PackedScene" id=9]
 
 [sub_resource type="ParticlesMaterial" id=1]
 emission_shape = 2
@@ -36,12 +37,12 @@ size = Vector2( 1000, 1000 )
 [node name="Player" parent="." instance=ExtResource( 2 )]
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.62932, 0.777146, 0, -0.777146, 0.62932, 0, 27.455, 22.2326 )
+transform = Transform( 1, 0, 0, 0, 0.62932, 0.777146, 0, -0.777146, 0.62932, 0, 27.4542, 22.232 )
 current = true
 far = 1000.0
 script = ExtResource( 1 )
 target_path = NodePath("../Player")
-distance = 35.328
+distance = 35.327
 angle_degrees = 51.0
 
 [node name="Building" parent="." instance=ExtResource( 3 )]
@@ -75,7 +76,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -34.2579, 4.29789, -128.605 )
 
 [node name="Rain" type="Particles" parent="."]
 transform = Transform( 1, 0, 0, 0, -2.98023e-08, 1, 0, -1, -2.98023e-08, 0, 32.4716, -3.8147e-06 )
-amount = 250
+amount = 1024
 visibility_aabb = AABB( -47.45, -46.61, -71.8189, 100, 100, 134.422 )
 local_coords = false
 process_material = SubResource( 1 )
@@ -119,3 +120,5 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -101.281, 0 )
 visible = false
 mesh = SubResource( 4 )
 material/0 = null
+
+[node name="Control" parent="." instance=ExtResource( 9 )]

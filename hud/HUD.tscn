@@ -1,0 +1,291 @@
+[gd_scene load_steps=34 format=2]
+
+[ext_resource path="res://hud/AcidMeter.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/font/rainyhearts.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://assets/coin/0001.png" type="Texture" id=3]
+[ext_resource path="res://assets/coin/0002.png" type="Texture" id=4]
+[ext_resource path="res://assets/coin/0004.png" type="Texture" id=5]
+[ext_resource path="res://assets/coin/0005.png" type="Texture" id=6]
+[ext_resource path="res://assets/coin/0006.png" type="Texture" id=7]
+[ext_resource path="res://assets/coin/0003.png" type="Texture" id=8]
+[ext_resource path="res://assets/health/0006.png" type="Texture" id=9]
+[ext_resource path="res://assets/health/0003.png" type="Texture" id=10]
+[ext_resource path="res://assets/health/0009.png" type="Texture" id=11]
+[ext_resource path="res://assets/health/0008.png" type="Texture" id=12]
+[ext_resource path="res://assets/health/0001.png" type="Texture" id=13]
+[ext_resource path="res://assets/health/0002.png" type="Texture" id=14]
+[ext_resource path="res://assets/health/0012.png" type="Texture" id=15]
+[ext_resource path="res://assets/health/0010.png" type="Texture" id=16]
+[ext_resource path="res://assets/health/0004.png" type="Texture" id=17]
+[ext_resource path="res://assets/health/0005.png" type="Texture" id=18]
+[ext_resource path="res://assets/health/0011.png" type="Texture" id=19]
+[ext_resource path="res://assets/health/0007.png" type="Texture" id=20]
+[ext_resource path="res://assets/healthbar/healthbar-under.png" type="Texture" id=21]
+[ext_resource path="res://assets/healthbar/healthbar-progress.png" type="Texture" id=22]
+[ext_resource path="res://hud/Acid.gd" type="Script" id=23]
+[ext_resource path="res://hud/Health.gd" type="Script" id=24]
+[ext_resource path="res://hud/HealthMeter.gd" type="Script" id=25]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.0588235, 0.0980392, 0.160784, 0.588235 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 4
+border_width_bottom = 1
+corner_radius_top_left = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="DynamicFont" id=2]
+size = 20
+font_data = ExtResource( 2 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0.0588235, 0.0980392, 0.160784, 0.588235 )
+border_width_left = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="DynamicFont" id=4]
+size = 30
+font_data = ExtResource( 2 )
+
+[sub_resource type="SpriteFrames" id=5]
+animations = [ {
+"frames": [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 8 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ) ],
+"loop": true,
+"name": "default",
+"speed": 6.0
+} ]
+
+[sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 0.0588235, 0.0980392, 0.160784, 0.588235 )
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+
+[sub_resource type="Animation" id=8]
+resource_name = "pulse"
+length = 0.5
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Meter:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.15, 1.15 ), Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="SpriteFrames" id=6]
+animations = [ {
+"frames": [ ExtResource( 13 ), ExtResource( 14 ), ExtResource( 10 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 9 ), ExtResource( 20 ), ExtResource( 12 ), ExtResource( 11 ), ExtResource( 16 ), ExtResource( 19 ), ExtResource( 15 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RainbowAcidMeter" parent="." instance=ExtResource( 1 )]
+visible = false
+anchor_left = 0.5
+anchor_right = 0.5
+margin_right = 0.0
+margin_bottom = 7.62939e-06
+
+[node name="Panel2" type="Panel" parent="."]
+margin_left = 822.658
+margin_top = 43.4307
+margin_right = 1024.66
+margin_bottom = 93.4307
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Panel2"]
+margin_left = 9.0
+margin_top = 7.25
+margin_right = 111.0
+margin_bottom = 42.25
+custom_fonts/normal_font = SubResource( 2 )
+text = "pH"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Acid" type="Panel" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -101.0
+margin_right = 101.0
+margin_bottom = 22.0
+custom_styles/panel = SubResource( 3 )
+script = ExtResource( 23 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Description" type="RichTextLabel" parent="Acid"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -65.0
+margin_top = -10.0
+margin_right = 65.0
+margin_bottom = 10.0
+custom_fonts/normal_font = SubResource( 2 )
+text = "Acid Rain Meter"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Value" type="Panel" parent="Acid"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -53.0
+margin_top = 22.0
+margin_right = 53.0
+margin_bottom = 53.0
+custom_styles/panel = SubResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="RichTextLabel" parent="Acid/Value"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -31.0
+margin_top = -15.0
+margin_right = 31.0
+margin_bottom = 15.0
+custom_fonts/normal_font = SubResource( 4 )
+text = "pH 5"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Gold" type="Panel" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = 163.0
+margin_right = 269.0
+margin_bottom = 31.0
+custom_styles/panel = SubResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="RichTextLabel" parent="Gold"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -15.7972
+margin_top = -16.0607
+margin_right = 46.2028
+margin_bottom = 13.9393
+custom_fonts/normal_font = SubResource( 4 )
+text = "20"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CoinSprite" type="AnimatedSprite" parent="Gold"]
+position = Vector2( 18.7047, 13.9793 )
+scale = Vector2( 0.674971, 0.674971 )
+frames = SubResource( 5 )
+frame = 1
+playing = true
+
+[node name="HealthMeter" type="Panel" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -110.0
+margin_top = -53.0
+margin_right = 110.0
+custom_styles/panel = SubResource( 7 )
+script = ExtResource( 25 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Meter" type="TextureProgress" parent="HealthMeter"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -49.1091
+margin_top = -12.3954
+margin_right = 90.8909
+margin_bottom = 15.6046
+rect_pivot_offset = Vector2( 69.9091, 14.2512 )
+value = 50.0
+texture_under = ExtResource( 21 )
+texture_progress = ExtResource( 22 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HealthMeter"]
+anims/pulse = SubResource( 8 )
+
+[node name="HealthSprite" type="AnimatedSprite" parent="HealthMeter"]
+position = Vector2( 28.712, 27.9128 )
+scale = Vector2( 0.959882, 0.959882 )
+frames = SubResource( 6 )
+frame = 5
+playing = true
+
+[node name="Health" type="Panel" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -274.306
+margin_top = 1.0
+margin_right = -168.306
+margin_bottom = 32.0
+custom_styles/panel = SubResource( 3 )
+script = ExtResource( 24 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="RichTextLabel" parent="Health"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -15.7972
+margin_top = -16.0607
+margin_right = 46.2028
+margin_bottom = 13.9393
+custom_fonts/normal_font = SubResource( 4 )
+text = "20"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HealthSprite2" type="AnimatedSprite" parent="Health"]
+position = Vector2( 19.2433, 13.0382 )
+scale = Vector2( 0.67187, 0.67187 )
+frames = SubResource( 6 )
+frame = 4
+playing = true

@@ -1,0 +1,187 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Control
+
+const max_hue = 256.0 / 360.0
+
+func _ready():
+	for i in range(0, $Strip.get_child_count()):
+		var pH = float(i)
+		
+		var h = lerp(0, max_hue, pH / 14.0 / 2.0)
+		var s = 0.92
+		var v = 0.90
+		var a = .75
+		var color = Color.from_hsv(h, s, v, a)
+		
+		var rect: ColorRect = $Strip.find_node(\"ph\" + str(i))
+		rect.color = color
+
+func _process(delta):
+	var rain_ph: int = 2
+	
+	var rect: ColorRect = $Strip.find_node(\"ph\" + str(rain_ph))
+	var rect_top_center = rect.rect_position
+	rect_top_center.x += rect.rect_size.x / 2
+	var needle_pos = rect_top_center - $Needle.rect_size / 2
+	$Needle.set_position(needle_pos)
+"
+
+[node name="AcidMeter" type="Control"]
+margin_left = -150.137
+margin_right = 149.863
+margin_bottom = 40.0
+script = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Strip" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ph0" type="ColorRect" parent="Strip"]
+margin_right = 20.0
+margin_bottom = 40.0
+color = Color( 0.901961, 0.0705882, 0.0705882, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ph1" type="ColorRect" parent="Strip"]
+margin_left = 20.0
+margin_right = 40.0
+margin_bottom = 40.0
+color = Color( 0.52549, 0.0705882, 0.901961, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ph2" type="ColorRect" parent="Strip"]
+margin_left = 40.0
+margin_right = 60.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ph3" type="ColorRect" parent="Strip"]
+margin_left = 60.0
+margin_right = 80.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ph4" type="ColorRect" parent="Strip"]
+margin_left = 80.0
+margin_right = 100.0
+margin_bottom = 40.0
+color = Color( 0.901961, 0.0705882, 0.0705882, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ph5" type="ColorRect" parent="Strip"]
+margin_left = 100.0
+margin_right = 120.0
+margin_bottom = 40.0
+color = Color( 0.52549, 0.0705882, 0.901961, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ph6" type="ColorRect" parent="Strip"]
+margin_left = 120.0
+margin_right = 140.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ph7" type="ColorRect" parent="Strip"]
+margin_left = 140.0
+margin_right = 160.0
+margin_bottom = 40.0
+color = Color( 0.0705882, 0.901961, 0.396078, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ph8" type="ColorRect" parent="Strip"]
+margin_left = 160.0
+margin_right = 180.0
+margin_bottom = 40.0
+color = Color( 0.901961, 0.0705882, 0.0705882, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ph9" type="ColorRect" parent="Strip"]
+margin_left = 180.0
+margin_right = 200.0
+margin_bottom = 40.0
+color = Color( 0.52549, 0.0705882, 0.901961, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ph10" type="ColorRect" parent="Strip"]
+margin_left = 200.0
+margin_right = 220.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ph11" type="ColorRect" parent="Strip"]
+margin_left = 220.0
+margin_right = 240.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ph12" type="ColorRect" parent="Strip"]
+margin_left = 240.0
+margin_right = 260.0
+margin_bottom = 40.0
+color = Color( 0.901961, 0.0705882, 0.0705882, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ph13" type="ColorRect" parent="Strip"]
+margin_left = 260.0
+margin_right = 280.0
+margin_bottom = 40.0
+color = Color( 0.52549, 0.0705882, 0.901961, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ph14" type="ColorRect" parent="Strip"]
+margin_left = 280.0
+margin_right = 300.0
+margin_bottom = 40.0
+color = Color( 0.52549, 0.0705882, 0.901961, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Needle" type="TextureRect" parent="."]
+margin_left = 136.892
+margin_right = 161.892
+margin_bottom = 25.0
+texture = ExtResource( 1 )
+expand = true
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
