@@ -1,8 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://assets/plant/plant.glb" type="PackedScene" id=1]
 [ext_resource path="res://plant/PlantMesh.gd" type="Script" id=2]
 [ext_resource path="res://assets/plant/Fruit.material" type="Material" id=3]
+[ext_resource path="res://assets/plant/LeafShader.tres" type="Material" id=4]
+[ext_resource path="res://assets/plant/LeafGlowShader.material" type="Material" id=5]
 
 [sub_resource type="Animation" id=1]
 resource_name = "spin"
@@ -38,6 +40,10 @@ script = ExtResource( 2 )
 
 [node name="Tween" type="Tween" parent="." index="0"]
 
+[node name="Leafs" parent="." index="3"]
+material/0 = ExtResource( 5 )
+material/1 = ExtResource( 4 )
+
 [node name="Cube010" parent="." index="4"]
 transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 1.86832, 3.5053, 0.719421 )
 
@@ -58,9 +64,6 @@ transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -0.956532, 1.90671, 0.85
 
 [node name="Cube016" parent="." index="10"]
 transform = Transform( 0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0.784267, 3.22351, -1.00024 )
-
-[node name="Fruit" parent="." index="11"]
-transform = Transform( 0.955371, 0, -0.295408, 0, 1, 0, 0.295408, 0, 0.955371, -0.302086, 5.01344, -0.140128 )
 
 [node name="FruitSpin" type="AnimationPlayer" parent="." index="12"]
 autoplay = "spin"
