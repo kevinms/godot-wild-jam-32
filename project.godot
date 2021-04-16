@@ -10,8 +10,8 @@ config_version=4
 
 [application]
 
-config/name="Godot-wild-jam- 32"
-run/main_scene="res://World.tscn"
+config/name="Cyberfarm"
+run/main_scene="res://ui/MainMenu.tscn"
 config/icon="res://icon.png"
 
 [autoload]

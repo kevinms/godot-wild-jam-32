@@ -12,6 +12,19 @@ var ammo: int = 5
 var plant_price = 5
 var fruit_price = 10
 
+func reset():
+	rain_acidity_per_sec = 0.75
+	rain_ph = 2.0
+	
+	tutorial = false
+	
+	health = 50
+	gold = 10
+	ammo = 5
+	
+	plant_price = 5
+	fruit_price = 10
+
 func buy_plant():
 	if gold < plant_price:
 		return false

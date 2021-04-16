@@ -1,4 +1,4 @@
-#tool
+tool
 extends Camera
 
 export(NodePath) var target_path

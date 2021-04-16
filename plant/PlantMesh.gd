@@ -12,15 +12,16 @@ onready var camera = get_viewport().get_camera()
 onready var sm: SpatialMaterial = acid_cube.get_active_material(0)
 const max_hue = 256.0 / 360.0
 
-var pH: float = 7.0
-var buffer_capacity = 1.0
+export var pH: float = 7.0
+export var buffer_capacity: float = 1.0
+export var random: bool = true
 
 #const upgrade_time = 0.5
-const upgrade_time = 2.0
-const upgrade_delay = 0.5
+export var upgrade_time: float = 2.0
+export var upgrade_delay: float = 0.5
 
-const stage_time_base: float = 0.5
-#const stage_time_base: float = 5.0
+#const stage_time_base: float = 0.5
+export var stage_time_base: float = 5.0
 var stage_time: float = stage_time_base
 
 # A floating point factor. Set it to 0.5 to grow half-speed, 2.0 to grow 2x-speed, etc.
@@ -31,9 +32,10 @@ func _ready():
 	randomize()
 	
 	# Randomize each plant's needs and resistance
-	#pH = rand_range(5.0, 14.0)
-	pH = 7.0
-	buffer_capacity = rand_range(0.4, 1.0)
+	if random:
+		#pH = rand_range(5.0, 14.0)
+		pH = 7.0
+		buffer_capacity = rand_range(0.4, 1.0)
 	
 	set_growth_rate_factor(1.0)
 	reset()

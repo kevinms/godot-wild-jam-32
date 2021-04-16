@@ -1,0 +1,436 @@
+[gd_scene load_steps=24 format=2]
+
+[ext_resource path="res://assets/font/rainyhearts.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Camera.gd" type="Script" id=2]
+[ext_resource path="res://plant/StaticPlant.tscn" type="PackedScene" id=3]
+[ext_resource path="res://plant/PlantMesh.tscn" type="PackedScene" id=4]
+[ext_resource path="res://environment/GloomyWorld.tres" type="Environment" id=5]
+[ext_resource path="res://rain/Rain.gd" type="Script" id=6]
+[ext_resource path="res://assets/rain/drop.png" type="Texture" id=7]
+[ext_resource path="res://building/Building.tscn" type="PackedScene" id=8]
+[ext_resource path="res://ui/ui-box-style.tres" type="StyleBox" id=9]
+[ext_resource path="res://ui/MainPanel.gd" type="Script" id=10]
+[ext_resource path="res://assets/sfx/rain/2-82367-A.ogg" type="AudioStream" id=11]
+[ext_resource path="res://ui/CreditsPanel.gd" type="Script" id=12]
+
+[sub_resource type="DynamicFont" id=12]
+size = 48
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=13]
+size = 32
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFontData" id=10]
+antialiased = false
+font_path = "res://assets/font/rainyhearts.ttf"
+
+[sub_resource type="DynamicFont" id=11]
+size = 22
+font_data = SubResource( 10 )
+
+[sub_resource type="DynamicFontData" id=8]
+antialiased = false
+font_path = "res://assets/font/rainyhearts.ttf"
+
+[sub_resource type="DynamicFont" id=9]
+size = 20
+font_data = SubResource( 8 )
+
+[sub_resource type="ParticlesMaterial" id=1]
+emission_shape = 2
+emission_box_extents = Vector3( 50, 50, 10 )
+direction = Vector3( 0, 0, -1 )
+spread = 0.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 70.0
+
+[sub_resource type="SpatialMaterial" id=2]
+flags_transparent = true
+flags_unshaded = true
+params_cull_mode = 2
+params_billboard_mode = 2
+albedo_texture = ExtResource( 7 )
+
+[sub_resource type="PlaneMesh" id=3]
+material = SubResource( 2 )
+size = Vector2( 1, 1 )
+
+[sub_resource type="CapsuleMesh" id=4]
+
+[sub_resource type="Animation" id=5]
+resource_name = "move"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Camera:distance")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 30.7, 15.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Camera:angle_degrees")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 40.0, 20.0 ]
+}
+
+[node name="MainMenu" type="Spatial"]
+
+[node name="MainPanel" type="Panel" parent="."]
+pause_mode = 2
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 72.0
+margin_top = -238.0
+margin_right = 489.0
+margin_bottom = 226.0
+custom_styles/panel = ExtResource( 9 )
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="MainPanel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -98.0
+margin_top = -208.111
+margin_right = 103.0
+margin_bottom = -163.111
+size_flags_horizontal = 0
+custom_fonts/font = SubResource( 12 )
+text = "Cyberfarm"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Quit" type="Button" parent="MainPanel"]
+margin_left = 47.5
+margin_top = 393.361
+margin_right = 113.5
+margin_bottom = 429.361
+custom_fonts/font = SubResource( 13 )
+text = "Quit"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Credits" type="Button" parent="MainPanel"]
+margin_left = 158.5
+margin_top = 393.361
+margin_right = 260.5
+margin_bottom = 429.361
+custom_fonts/font = SubResource( 13 )
+text = "Credits"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Play" type="Button" parent="MainPanel"]
+margin_left = 299.721
+margin_top = 393.361
+margin_right = 373.721
+margin_bottom = 429.361
+custom_fonts/font = SubResource( 13 )
+text = "Play"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MadeBy" type="Label" parent="MainPanel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -108.5
+margin_top = -161.0
+margin_right = 111.5
+margin_bottom = -122.0
+size_flags_horizontal = 0
+custom_fonts/font = SubResource( 11 )
+text = "Made By: Kevin Smith"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GridContainer" type="GridContainer" parent="MainPanel"]
+visible = false
+margin_left = 122.5
+margin_top = 87.5
+margin_right = 423.5
+margin_bottom = 129.5
+columns = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DifficultyLabel" type="Label" parent="MainPanel/GridContainer"]
+margin_right = 78.0
+margin_bottom = 19.0
+size_flags_horizontal = 0
+custom_fonts/font = SubResource( 9 )
+text = "Difficulty"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DifficultySlider" type="HSlider" parent="MainPanel/GridContainer"]
+margin_left = 82.0
+margin_right = 301.0
+margin_bottom = 16.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+min_value = -32.0
+max_value = 16.0
+
+[node name="TipsLabel" type="Label" parent="MainPanel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -66.0
+margin_top = -92.2944
+margin_right = 66.0
+margin_bottom = -47.2944
+size_flags_horizontal = 0
+custom_fonts/font = SubResource( 12 )
+text = "Tips"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TipsText" type="Label" parent="MainPanel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -231.0
+margin_top = -43.0
+margin_right = 229.0
+margin_bottom = 132.0
+size_flags_horizontal = 0
+custom_fonts/font = SubResource( 11 )
+text = "Grow plants, destroy drones, buy upgrades.
+
+Space: Place plant
+Left click: Shoot laser
+E: Feed plant"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CreditsPanel" type="Panel" parent="."]
+pause_mode = 2
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 72.0
+margin_top = -238.0
+margin_right = 489.0
+margin_bottom = 226.0
+custom_styles/panel = ExtResource( 9 )
+script = ExtResource( 12 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Label" parent="CreditsPanel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -98.0
+margin_top = -208.111
+margin_right = 103.0
+margin_bottom = -163.111
+size_flags_horizontal = 0
+custom_fonts/font = SubResource( 12 )
+text = "Credits"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Back" type="Button" parent="CreditsPanel"]
+margin_left = 158.5
+margin_top = 393.361
+margin_right = 260.5
+margin_bottom = 429.361
+custom_fonts/font = SubResource( 13 )
+text = "Back"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TipsText" type="Label" parent="CreditsPanel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -231.0
+margin_top = -147.0
+margin_right = 229.0
+margin_bottom = 28.0
+size_flags_horizontal = 0
+custom_fonts/font = SubResource( 11 )
+text = "Music:
+Source: https://soundcloud.com/punch-deck
+License: CC BY 3.0
+Files:
+ * Punch Deck - By Force.wav
+ * Punch Deck - Fallen.wav
+ * Punch Deck - Flutter.wav"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Building9" parent="." instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -34.2579, 4.29789, -128.605 )
+
+[node name="Building" parent="." instance=ExtResource( 8 )]
+
+[node name="Building2" parent="." instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.14597, 0, -53.7952 )
+
+[node name="Building3" parent="." instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 48.5284, 0, -20.9446 )
+
+[node name="Building7" parent="." instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 46.9481, -27.3434, 30.6957 )
+
+[node name="Building10" parent="." instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -56.7473, -27.3434, 20.1002 )
+
+[node name="Building4" parent="." instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -46.4749, -3.8147e-06, -34.5725 )
+
+[node name="Building5" parent="." instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -43.0975, -36.2003, -89.5378 )
+
+[node name="Building6" parent="." instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 64.4009, 15.3075, -94.4321 )
+
+[node name="Building8" parent="." instance=ExtResource( 8 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 19.4138, 33.4594, -128.605 )
+
+[node name="Rain" type="Particles" parent="."]
+transform = Transform( 1, 0, 0, 0, -2.98023e-08, 1, 0, -1, -2.98023e-08, 0, 32.4716, -3.8147e-06 )
+amount = 1024
+visibility_aabb = AABB( -47.45, -46.61, -71.8189, 100, 100, 134.422 )
+local_coords = false
+process_material = SubResource( 1 )
+draw_pass_1 = SubResource( 3 )
+script = ExtResource( 6 )
+
+[node name="RainSound" type="AudioStreamPlayer" parent="Rain"]
+pause_mode = 2
+stream = ExtResource( 11 )
+bus = "Rain"
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.939693, 0.34202, 0, -0.34202, 0.939693, -1.62891, 5.1303, 11.6804 )
+current = true
+far = 1000.0
+script = ExtResource( 2 )
+target_path = NodePath("../Player")
+distance = 15.0
+angle_degrees = 20.0
+
+[node name="Player" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1.62891, 0, -2.415 )
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="CameraAnimation" type="AnimationPlayer" parent="."]
+autoplay = "move"
+anims/move = SubResource( 5 )
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 48.6215, 0 )
+light_energy = 0.5
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource( 5 )
+
+[node name="PlantMesh" parent="." instance=ExtResource( 4 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.0494, -0.758, 0 )
+pH = 11.0
+buffer_capacity = 0.2
+random = false
+stage_time_base = 2.0
+
+[node name="StaticPlant8" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 38.5571, -0.755278, -15.5071 )
+pH = 3.0
+
+[node name="StaticPlant7" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 50.176, -0.755278, -13.0439 )
+pH = 1.0
+fruit = true
+
+[node name="StaticPlant6" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 39.4288, -0.755278, -28.5114 )
+pH = 5.0
+fruit = true
+
+[node name="StaticPlant9" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -6.0281, -0.755278, -8.14779 )
+pH = 5.0
+fruit = true
+
+[node name="StaticPlant5" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 11.9085, -0.755278, -54.6683 )
+fruit = true
+
+[node name="StaticPlant4" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.67786, -0.755278, -46.0132 )
+pH = 14.0
+
+[node name="StaticPlant3" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -39.102, -0.755278, -39.6138 )
+
+[node name="StaticPlant2" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -48.4239, -0.755278, -27.5352 )
+pH = 1.0
+
+[node name="StaticPlant" parent="." instance=ExtResource( 3 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -35.9763, -0.755278, -22.7709 )
+pH = 2.0
+fruit = true
+
+[connection signal="pressed" from="MainPanel/Quit" to="MainPanel" method="_on_Quit_pressed"]
+[connection signal="pressed" from="MainPanel/Credits" to="MainPanel" method="_on_Credits_pressed"]
+[connection signal="pressed" from="MainPanel/Play" to="MainPanel" method="_on_Play_pressed"]
+[connection signal="pressed" from="CreditsPanel/Back" to="MainPanel" method="_on_Back_pressed"]

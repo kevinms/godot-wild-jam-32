@@ -7,7 +7,14 @@ onready var player = $Player
 onready var cursor = preload("res://assets/cursor/cursor.png")
 
 func _ready():
-	Input.set_custom_mouse_cursor(cursor, Input.CURSOR_ARROW, Vector2(16,16))
+	Input.set_custom_mouse_cursor(cursor, Input.CURSOR_ARROW, Vector2(16,16))\
+	
+	$Music.stream = AudioLibrary.random(AudioLibrary.music)
+	$Music.play()
+	
+	$GameOverPanel.hide()
+	
+	Global.reset()
 
 func _process(delta):
 	if Input.is_action_just_pressed("restart"):

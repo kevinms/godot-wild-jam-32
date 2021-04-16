@@ -1,0 +1,254 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://assets/font/rainyhearts.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://ui/ui-box-style.tres" type="StyleBox" id=2]
+[ext_resource path="res://ui/PauseMenu.gd" type="Script" id=3]
+
+[sub_resource type="DynamicFont" id=1]
+size = 48
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 32
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFontData" id=3]
+antialiased = false
+font_path = "res://assets/font/rainyhearts.ttf"
+
+[sub_resource type="DynamicFont" id=4]
+size = 20
+font_data = SubResource( 3 )
+
+[sub_resource type="DynamicFontData" id=5]
+antialiased = false
+font_path = "res://assets/font/rainyhearts.ttf"
+
+[sub_resource type="DynamicFont" id=6]
+size = 22
+font_data = SubResource( 5 )
+
+[node name="PopupMenu" type="PopupDialog"]
+pause_mode = 2
+visible = true
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -278.0
+margin_top = -232.0
+margin_right = 278.0
+margin_bottom = 232.0
+custom_styles/panel = ExtResource( 2 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -66.0
+margin_top = -220.111
+margin_right = 66.0
+margin_bottom = -175.111
+size_flags_horizontal = 0
+custom_fonts/font = SubResource( 1 )
+text = "Paused"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Quit" type="Button" parent="."]
+margin_left = 75.9882
+margin_top = 396.361
+margin_right = 141.988
+margin_bottom = 432.361
+custom_fonts/font = SubResource( 2 )
+text = "Quit"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Menu" type="Button" parent="."]
+margin_left = 227.209
+margin_top = 396.361
+margin_right = 301.209
+margin_bottom = 432.361
+custom_fonts/font = SubResource( 2 )
+text = "Menu"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Resume" type="Button" parent="."]
+margin_left = 386.318
+margin_top = 396.361
+margin_right = 494.318
+margin_bottom = 432.361
+custom_fonts/font = SubResource( 2 )
+text = "Resume"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_left = 83.5
+margin_top = 82.0
+margin_right = 460.5
+margin_bottom = 101.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GridContainer" type="GridContainer" parent="."]
+margin_left = 122.5
+margin_top = 59.1838
+margin_right = 423.5
+margin_bottom = 129.184
+columns = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MuteLabel" type="Label" parent="GridContainer"]
+margin_top = 2.0
+margin_right = 37.0
+margin_bottom = 21.0
+size_flags_horizontal = 0
+custom_fonts/font = SubResource( 4 )
+text = "Mute"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MuteToggle" type="CheckBox" parent="GridContainer"]
+margin_left = 122.0
+margin_right = 301.0
+margin_bottom = 24.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+
+[node name="VolumeLabel" type="Label" parent="GridContainer"]
+margin_top = 28.0
+margin_right = 118.0
+margin_bottom = 47.0
+size_flags_horizontal = 0
+custom_fonts/font = SubResource( 4 )
+text = "Master Volume"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VolumeSlider" type="HSlider" parent="GridContainer"]
+margin_left = 122.0
+margin_top = 28.0
+margin_right = 301.0
+margin_bottom = 44.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+min_value = -32.0
+max_value = 16.0
+
+[node name="RainLabel" type="Label" parent="GridContainer"]
+margin_top = 51.0
+margin_right = 100.0
+margin_bottom = 70.0
+size_flags_horizontal = 0
+custom_fonts/font = SubResource( 4 )
+text = "Rain Volume"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RainSlider" type="HSlider" parent="GridContainer"]
+margin_left = 122.0
+margin_top = 51.0
+margin_right = 301.0
+margin_bottom = 67.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+min_value = -32.0
+max_value = 16.0
+
+[node name="MusicLabel" type="Label" parent="GridContainer"]
+margin_top = 74.0
+margin_right = 108.0
+margin_bottom = 93.0
+size_flags_horizontal = 0
+custom_fonts/font = SubResource( 4 )
+text = "Music Volume"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MusicSlider" type="HSlider" parent="GridContainer"]
+margin_left = 122.0
+margin_top = 74.0
+margin_right = 301.0
+margin_bottom = 90.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+min_value = -32.0
+max_value = 16.0
+
+[node name="TipsLabel" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -66.0
+margin_top = -71.2944
+margin_right = 66.0
+margin_bottom = -26.2944
+size_flags_horizontal = 0
+custom_fonts/font = SubResource( 1 )
+text = "Tips"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TipsText" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -231.0
+margin_top = -15.0
+margin_right = 229.0
+margin_bottom = 132.0
+size_flags_horizontal = 0
+custom_fonts/font = SubResource( 6 )
+text = "Grow plants, destroy drones, buy upgrades.
+
+Space: Place plant
+Left click: Shoot laser
+E: Feed plant"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="Quit" to="." method="_on_Quit_pressed"]
+[connection signal="pressed" from="Menu" to="." method="_on_Menu_pressed"]
+[connection signal="pressed" from="Resume" to="." method="_on_Resume_pressed"]
+[connection signal="pressed" from="GridContainer/MuteToggle" to="." method="_on_MuteToggle_pressed"]
+[connection signal="value_changed" from="GridContainer/VolumeSlider" to="." method="_on_VolumeSlider_value_changed"]
+[connection signal="value_changed" from="GridContainer/RainSlider" to="." method="_on_RainSlider_value_changed"]
+[connection signal="value_changed" from="GridContainer/MusicSlider" to="." method="_on_MusicSlider_value_changed"]

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Punch Deck - Fallen.ogg-98b664b427398e5e2bd4c7fa224c9a7d.oggstr"
+
+[deps]
+
+source_file="res://assets/music/Punch Deck - Fallen.ogg"
+dest_files=[ "res://.import/Punch Deck - Fallen.ogg-98b664b427398e5e2bd4c7fa224c9a7d.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

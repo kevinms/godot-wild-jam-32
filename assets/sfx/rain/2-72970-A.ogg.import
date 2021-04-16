@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/2-72970-A.ogg-81cec72a1f5bd0f5ae3c6f1b25498e98.oggstr"
+
+[deps]
+
+source_file="res://assets/sfx/rain/2-72970-A.ogg"
+dest_files=[ "res://.import/2-72970-A.ogg-81cec72a1f5bd0f5ae3c6f1b25498e98.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

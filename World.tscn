@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://Camera.gd" type="Script" id=1]
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=2]
@@ -9,10 +9,14 @@
 [ext_resource path="res://plant/PlantMesh.tscn" type="PackedScene" id=7]
 [ext_resource path="res://World.gd" type="Script" id=8]
 [ext_resource path="res://hud/HUD.tscn" type="PackedScene" id=9]
-[ext_resource path="res://drone/Drone.tscn" type="PackedScene" id=10]
+[ext_resource path="res://ui/PopupMenu.tscn" type="PackedScene" id=10]
 [ext_resource path="res://pickups/Ammo.tscn" type="PackedScene" id=11]
 [ext_resource path="res://plant/StaticPlant.tscn" type="PackedScene" id=12]
 [ext_resource path="res://ItemDrop.gd" type="Script" id=13]
+[ext_resource path="res://assets/sfx/rain/2-82367-A.ogg" type="AudioStream" id=14]
+[ext_resource path="res://assets/font/rainyhearts.ttf" type="DynamicFontData" id=15]
+[ext_resource path="res://ui/GameOverPanel.gd" type="Script" id=16]
+[ext_resource path="res://ui/ui-box-style.tres" type="StyleBox" id=17]
 
 [sub_resource type="ParticlesMaterial" id=1]
 emission_shape = 2
@@ -47,8 +51,37 @@ albedo_color = Color( 0.0784314, 0.0509804, 0.976471, 1 )
 [sub_resource type="SpatialMaterial" id=8]
 albedo_color = Color( 0.027451, 0.905882, 0.266667, 1 )
 
+[sub_resource type="DynamicFont" id=12]
+size = 48
+font_data = ExtResource( 15 )
+
+[sub_resource type="DynamicFont" id=13]
+size = 32
+font_data = ExtResource( 15 )
+
+[sub_resource type="DynamicFontData" id=10]
+antialiased = false
+font_path = "res://assets/font/rainyhearts.ttf"
+
+[sub_resource type="DynamicFont" id=16]
+size = 42
+font_data = SubResource( 10 )
+
+[sub_resource type="DynamicFontData" id=14]
+antialiased = false
+font_path = "res://assets/font/rainyhearts.ttf"
+
+[sub_resource type="DynamicFont" id=15]
+size = 32
+font_data = SubResource( 14 )
+
 [node name="World" type="Spatial"]
 script = ExtResource( 8 )
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+pause_mode = 2
+volume_db = -8.0
+bus = "Music"
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
 
@@ -99,6 +132,11 @@ process_material = SubResource( 1 )
 draw_pass_1 = SubResource( 3 )
 script = ExtResource( 5 )
 
+[node name="RainSound" type="AudioStreamPlayer" parent="Rain"]
+pause_mode = 2
+stream = ExtResource( 14 )
+bus = "Rain"
+
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 48.6215, 0 )
 light_energy = 0.5
@@ -107,16 +145,39 @@ shadow_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource( 6 )
 
-[node name="Control" parent="." instance=ExtResource( 9 )]
+[node name="HUD" parent="." instance=ExtResource( 9 )]
+
+[node name="PopupMenu" parent="." instance=ExtResource( 10 )]
 
 [node name="PlantMesh" parent="." instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.0494, -0.758, 0 )
 
-[node name="Drone" parent="." instance=ExtResource( 10 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 17.472, 2, 0 )
-
 [node name="Ammo" parent="." instance=ExtResource( 11 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.83028, -1.74439, 0 )
+
+[node name="ItemDrop" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.6874, 0 )
+script = ExtResource( 13 )
+
+[node name="DropPlane" type="MeshInstance" parent="ItemDrop"]
+visible = false
+mesh = SubResource( 4 )
+material/0 = null
+
+[node name="DebugFrom" type="MeshInstance" parent="ItemDrop"]
+visible = false
+mesh = SubResource( 5 )
+material/0 = SubResource( 6 )
+
+[node name="DebugTo" type="MeshInstance" parent="ItemDrop"]
+visible = false
+mesh = SubResource( 5 )
+material/0 = SubResource( 7 )
+
+[node name="DebugHit" type="MeshInstance" parent="ItemDrop"]
+visible = false
+mesh = SubResource( 5 )
+material/0 = SubResource( 8 )
 
 [node name="StaticPlant" parent="." instance=ExtResource( 12 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -35.9763, -0.755278, -22.7709 )
@@ -152,28 +213,202 @@ fruit = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 38.5571, -0.755278, -15.5071 )
 pH = 3.0
 
-[node name="ItemDrop" type="Position3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 14.6874, 0 )
-script = ExtResource( 13 )
+[node name="GameOverPanel" type="Panel" parent="."]
+pause_mode = 2
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 72.0
+margin_top = -238.0
+margin_right = 489.0
+margin_bottom = 226.0
+custom_styles/panel = ExtResource( 17 )
+script = ExtResource( 16 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="DropPlane" type="MeshInstance" parent="ItemDrop"]
-visible = false
-mesh = SubResource( 4 )
-material/0 = null
+[node name="Title" type="Label" parent="GameOverPanel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -97.5
+margin_top = -208.0
+margin_right = 109.5
+margin_bottom = -163.0
+size_flags_horizontal = 0
+custom_fonts/font = SubResource( 12 )
+text = "Game Over"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="DebugFrom" type="MeshInstance" parent="ItemDrop"]
-visible = false
-mesh = SubResource( 5 )
-material/0 = SubResource( 6 )
+[node name="Menu" type="Button" parent="GameOverPanel"]
+margin_left = 77.5
+margin_top = 393.361
+margin_right = 179.5
+margin_bottom = 429.361
+custom_fonts/font = SubResource( 13 )
+text = "Menu"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="DebugTo" type="MeshInstance" parent="ItemDrop"]
-visible = false
-mesh = SubResource( 5 )
-material/0 = SubResource( 7 )
+[node name="Restart" type="Button" parent="GameOverPanel"]
+margin_left = 238.5
+margin_top = 393.361
+margin_right = 340.5
+margin_bottom = 429.361
+custom_fonts/font = SubResource( 13 )
+text = "Restart"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="DebugHit" type="MeshInstance" parent="ItemDrop"]
-visible = false
-mesh = SubResource( 5 )
-material/0 = SubResource( 8 )
+[node name="TipsText" type="Label" parent="GameOverPanel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -90.5
+margin_top = -139.0
+margin_right = 89.5
+margin_bottom = -94.0
+size_flags_horizontal = 0
+custom_fonts/font = SubResource( 16 )
+text = "Rating: S"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GridContainer" type="GridContainer" parent="GameOverPanel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -53.0
+margin_top = -20.0
+margin_right = 53.0
+margin_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="KilledLabel" type="Label" parent="GameOverPanel/GridContainer"]
+margin_right = 174.0
+margin_bottom = 30.0
+size_flags_horizontal = 0
+custom_fonts/font = SubResource( 15 )
+text = "Drones Killed:"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Killed" type="Label" parent="GameOverPanel/GridContainer"]
+margin_left = 224.0
+margin_right = 250.0
+margin_bottom = 30.0
+size_flags_horizontal = 0
+custom_fonts/font = SubResource( 15 )
+text = "45"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GoldLabel" type="Label" parent="GameOverPanel/GridContainer"]
+margin_top = 34.0
+margin_right = 60.0
+margin_bottom = 64.0
+size_flags_horizontal = 0
+custom_fonts/font = SubResource( 15 )
+text = "Gold:"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Gold" type="Label" parent="GameOverPanel/GridContainer"]
+margin_left = 224.0
+margin_top = 34.0
+margin_right = 266.0
+margin_bottom = 64.0
+size_flags_horizontal = 0
+custom_fonts/font = SubResource( 15 )
+text = "290"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlantsDiedLabel" type="Label" parent="GameOverPanel/GridContainer"]
+margin_top = 68.0
+margin_right = 148.0
+margin_bottom = 98.0
+size_flags_horizontal = 0
+custom_fonts/font = SubResource( 15 )
+text = "Plants Died:"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlantsDied" type="Label" parent="GameOverPanel/GridContainer"]
+margin_left = 224.0
+margin_top = 68.0
+margin_right = 238.0
+margin_bottom = 98.0
+size_flags_horizontal = 0
+custom_fonts/font = SubResource( 15 )
+text = "3"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlantsHarvestedLabel" type="Label" parent="GameOverPanel/GridContainer"]
+margin_top = 102.0
+margin_right = 220.0
+margin_bottom = 132.0
+size_flags_horizontal = 0
+custom_fonts/font = SubResource( 15 )
+text = "Plants Harvested:"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlantsHarvested" type="Label" parent="GameOverPanel/GridContainer"]
+margin_left = 224.0
+margin_top = 102.0
+margin_right = 252.0
+margin_bottom = 132.0
+size_flags_horizontal = 0
+custom_fonts/font = SubResource( 15 )
+text = "92"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [connection signal="place_a_plant" from="Player" to="." method="_on_Player_place_a_plant"]
+[connection signal="pressed" from="GameOverPanel/Menu" to="GameOverPanel" method="_on_Menu_pressed"]
+[connection signal="pressed" from="GameOverPanel/Restart" to="GameOverPanel" method="_on_Restart_pressed"]

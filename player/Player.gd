@@ -70,7 +70,7 @@ func fire_laser():
 		return
 	Global.ammo -= 1
 	
-	var root = get_tree().get_root()
+	var root = get_node("/root/World")
 	var laser = laser_scene.instance()
 	laser.global_transform = global_transform
 	laser.speed = 50.0

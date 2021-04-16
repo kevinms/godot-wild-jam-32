@@ -126,7 +126,7 @@ func on_plane():
 	return
 
 func fire_laser():
-	var root = get_tree().get_root()
+	var root = get_node("/root/World")
 	var laser = laser_scene.instance()
 	#laser.global_transform = $Pin.global_transform
 	#laser.global_transform.origin.y = player.global_transform.origin.y
