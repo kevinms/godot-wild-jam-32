@@ -3,7 +3,25 @@ extends Node
 var rain_acidity_per_sec: float = 1.0
 var rain_ph: float = 2.0
 
+var tutorial: bool = false
+
 var health: float = 50
+var gold: int = 0.0
+
+var plant_price = 5
+var fruit_price = 10
+
+func buy_plant():
+	if gold < plant_price:
+		return false
+	
+	gold -= plant_price
+	return true
+
+signal fruit_ready(plant)
+
+func emit_fruit_ready(plant):
+	emit_signal("fruit_ready", plant)
 
 signal player_damaged(damage)
 

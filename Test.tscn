@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Spatial
+
+func _ready():
+	$Timer.start()
+	
+
+
+func _on_Timer_timeout():
+	print(\"timeout\")
+	$Timer2.start()
+
+
+func _on_Timer2_timeout():
+	print(\"timeout2\")
+"
+
+[node name="Spatial" type="Spatial"]
+script = SubResource( 1 )
+
+[node name="Timer2" type="Timer" parent="."]
+one_shot = true
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="Timer2" to="." method="_on_Timer2_timeout"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

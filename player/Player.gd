@@ -7,12 +7,11 @@ var velocity = Vector3.ZERO
 var mouse_plane_pos: Vector3
 
 onready var camera = get_viewport().get_camera()
+onready var max_interaction_dist = $Hitbox/CollisionShape.shape.radius
 
 func _ready():
 	Global.connect("player_damaged", self, "_on_Player_player_damaged")
-
-func _on_Player_player_damaged(damage):
-	print("damaged!!!")
+	Global.connect("fruit_ready", self, "_on_Player_fruit_ready")
 
 func _input(event):
 	if event is InputEventMouseMotion:
@@ -49,6 +48,8 @@ func _physics_process(delta):
 var fire_rate: float = 0.2
 var time_since_last_fire: float = 0.0
 
+signal place_a_plant()
+
 func _process(delta):
 	time_since_last_fire += delta
 	
@@ -59,6 +60,8 @@ func _process(delta):
 		while time_since_last_fire > fire_rate:
 			fire_laser()
 			time_since_last_fire -= fire_rate
+	elif Input.is_action_just_pressed("action"):
+		emit_signal("place_a_plant")
 
 onready var laser_scene = preload("res://player/Laser.tscn")
 
@@ -77,10 +80,33 @@ func global_input_dir() -> Vector3:
 	
 	return dir
 
+func harvest(plant):
+	print("harvesting")
+	if !plant.harvest():
+		return
+	
+	Global.gold += Global.fruit_price
+
 func _on_Hitbox_body_entered(body):
 	if body.is_in_group("plant"):
-		var plant = body.get_parent()
+		print("plant in range", body.get_path())
+		var plant = body
 		plant.pH = 7.0
+		
+		harvest(plant)
+
+func _on_Player_fruit_ready(plant):
+	# Attempt to harvest
+	var dist = global_transform.origin.distance_to(plant.global_transform.origin)
+	
+	if dist > max_interaction_dist + 1.1:
+		print("Player is ", dist, " units away -- must be within ", max_interaction_dist, " units")
+		return
+	
+	harvest(plant)
 
 func _on_Hitbox_body_exited(body):
 	pass # Replace with function body.
+
+func _on_Player_player_damaged(damage):
+	print("damaged!!!")

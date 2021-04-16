@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=35 format=2]
 
 [ext_resource path="res://hud/AcidMeter.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/font/rainyhearts.ttf" type="DynamicFontData" id=2]
@@ -25,6 +25,7 @@
 [ext_resource path="res://hud/Acid.gd" type="Script" id=23]
 [ext_resource path="res://hud/Health.gd" type="Script" id=24]
 [ext_resource path="res://hud/HealthMeter.gd" type="Script" id=25]
+[ext_resource path="res://hud/Gold.gd" type="Script" id=26]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.0588235, 0.0980392, 0.160784, 0.588235 )
@@ -59,7 +60,7 @@ animations = [ {
 "speed": 6.0
 } ]
 
-[sub_resource type="StyleBoxFlat" id=7]
+[sub_resource type="StyleBoxFlat" id=6]
 bg_color = Color( 0.0588235, 0.0980392, 0.160784, 0.588235 )
 border_width_left = 2
 border_width_top = 2
@@ -67,7 +68,7 @@ border_width_right = 2
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=7]
 resource_name = "pulse"
 length = 0.5
 loop = true
@@ -84,7 +85,7 @@ tracks/0/keys = {
 "values": [ Vector2( 1, 1 ), Vector2( 1.15, 1.15 ), Vector2( 1, 1 ) ]
 }
 
-[sub_resource type="SpriteFrames" id=6]
+[sub_resource type="SpriteFrames" id=8]
 animations = [ {
 "frames": [ ExtResource( 13 ), ExtResource( 14 ), ExtResource( 10 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 9 ), ExtResource( 20 ), ExtResource( 12 ), ExtResource( 11 ), ExtResource( 16 ), ExtResource( 19 ), ExtResource( 15 ) ],
 "loop": true,
@@ -103,8 +104,10 @@ __meta__ = {
 visible = false
 anchor_left = 0.5
 anchor_right = 0.5
-margin_right = 0.0
-margin_bottom = 7.62939e-06
+margin_left = -140.046
+margin_top = 92.4986
+margin_right = 10.0908
+margin_bottom = 92.4986
 
 [node name="Panel2" type="Panel" parent="."]
 margin_left = 822.658
@@ -188,6 +191,7 @@ margin_left = 163.0
 margin_right = 269.0
 margin_bottom = 31.0
 custom_styles/panel = SubResource( 3 )
+script = ExtResource( 26 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -211,7 +215,7 @@ __meta__ = {
 position = Vector2( 18.7047, 13.9793 )
 scale = Vector2( 0.674971, 0.674971 )
 frames = SubResource( 5 )
-frame = 1
+frame = 4
 playing = true
 
 [node name="HealthMeter" type="Panel" parent="."]
@@ -222,7 +226,7 @@ anchor_bottom = 1.0
 margin_left = -110.0
 margin_top = -53.0
 margin_right = 110.0
-custom_styles/panel = SubResource( 7 )
+custom_styles/panel = SubResource( 6 )
 script = ExtResource( 25 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -246,13 +250,13 @@ __meta__ = {
 }
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="HealthMeter"]
-anims/pulse = SubResource( 8 )
+anims/pulse = SubResource( 7 )
 
 [node name="HealthSprite" type="AnimatedSprite" parent="HealthMeter"]
 position = Vector2( 28.712, 27.9128 )
 scale = Vector2( 0.959882, 0.959882 )
-frames = SubResource( 6 )
-frame = 5
+frames = SubResource( 8 )
+frame = 8
 playing = true
 
 [node name="Health" type="Panel" parent="."]
@@ -286,6 +290,6 @@ __meta__ = {
 [node name="HealthSprite2" type="AnimatedSprite" parent="Health"]
 position = Vector2( 19.2433, 13.0382 )
 scale = Vector2( 0.67187, 0.67187 )
-frames = SubResource( 6 )
-frame = 4
+frames = SubResource( 8 )
+frame = 7
 playing = true

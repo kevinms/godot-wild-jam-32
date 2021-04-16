@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/plant-upgrade-disk.obj-78fee96c359fdffacb947a7b40c42c75.mesh"
+
+[deps]
+
+files=[ "res://.import/plant-upgrade-disk.obj-78fee96c359fdffacb947a7b40c42c75.mesh" ]
+
+source_file="res://assets/plant/plant-upgrade-disk.obj"
+dest_files=[ "res://.import/plant-upgrade-disk.obj-78fee96c359fdffacb947a7b40c42c75.mesh", "res://.import/plant-upgrade-disk.obj-78fee96c359fdffacb947a7b40c42c75.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true
