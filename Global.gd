@@ -6,7 +6,7 @@ var rain_ph: float = 2.0
 var tutorial: bool = false
 
 var health: float = 50
-var gold: int = 0.0
+var gold: int = 10
 var ammo: int = 5
 
 var plant_price = 5

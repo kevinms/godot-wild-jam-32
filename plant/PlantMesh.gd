@@ -19,8 +19,8 @@ var buffer_capacity = 1.0
 const upgrade_time = 2.0
 const upgrade_delay = 0.5
 
-#const stage_time_base: float = 0.5
-const stage_time_base: float = 5.0
+const stage_time_base: float = 0.5
+#const stage_time_base: float = 5.0
 var stage_time: float = stage_time_base
 
 # A floating point factor. Set it to 0.5 to grow half-speed, 2.0 to grow 2x-speed, etc.
@@ -91,6 +91,9 @@ func _process(delta):
 		$Panel.visible = false
 
 func update_color():
+	if stage >= FRUIT:
+		return
+	
 	var h = lerp(0, max_hue, pH / 14.0)
 	var s = 0.92
 	var v = 0.90
@@ -147,6 +150,7 @@ func _on_StageTimer_timeout():
 		BULBS:
 			stage = FRUIT
 			upgrade_effect()
+			acid_cube_pulse.stop(true)
 			tween.interpolate_property(acid_cube, "scale", null, Vector3.ZERO, upgrade_delay, Tween.TRANS_LINEAR, Tween.EASE_OUT)
 			tween.interpolate_property(fruit, "scale", Vector3.ZERO, Vector3.ONE, upgrade_time, Tween.TRANS_LINEAR, Tween.EASE_OUT, upgrade_delay)
 			tween.start()
