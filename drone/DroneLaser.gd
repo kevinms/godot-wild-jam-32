@@ -42,6 +42,8 @@ func _on_Laser_body_entered(body):
 		$ExplosionTimer.start()
 		$ExplosionSound.play()
 		dead = true
+		collision_layer = 0
+		collision_mask = 0
 	else:
 		print(body.get_path())
 

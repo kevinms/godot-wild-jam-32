@@ -1,12 +1,13 @@
 extends Node
 
-var rain_acidity_per_sec: float = 1.0
+var rain_acidity_per_sec: float = 0.75
 var rain_ph: float = 2.0
 
 var tutorial: bool = false
 
 var health: float = 50
 var gold: int = 0.0
+var ammo: int = 5
 
 var plant_price = 5
 var fruit_price = 10

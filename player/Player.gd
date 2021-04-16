@@ -66,6 +66,10 @@ func _process(delta):
 onready var laser_scene = preload("res://player/Laser.tscn")
 
 func fire_laser():
+	if Global.ammo <= 0:
+		return
+	Global.ammo -= 1
+	
 	var root = get_tree().get_root()
 	var laser = laser_scene.instance()
 	laser.global_transform = global_transform
@@ -91,7 +95,7 @@ func _on_Hitbox_body_entered(body):
 	if body.is_in_group("plant"):
 		print("plant in range", body.get_path())
 		var plant = body
-		plant.pH = 7.0
+		plant.feed(7.0)
 		
 		harvest(plant)
 
@@ -110,3 +114,4 @@ func _on_Hitbox_body_exited(body):
 
 func _on_Player_player_damaged(damage):
 	print("damaged!!!")
+	$DamageSound.play()

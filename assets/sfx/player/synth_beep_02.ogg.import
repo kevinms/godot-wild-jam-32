@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/synth_beep_02.ogg-d20f3c07c465fe67d801c38983842af4.oggstr"
+
+[deps]
+
+source_file="res://assets/sfx/player/synth_beep_02.ogg"
+dest_files=[ "res://.import/synth_beep_02.ogg-d20f3c07c465fe67d801c38983842af4.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

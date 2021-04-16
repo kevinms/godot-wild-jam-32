@@ -12,18 +12,15 @@ onready var camera = get_viewport().get_camera()
 onready var sm: SpatialMaterial = acid_cube.get_active_material(0)
 const max_hue = 256.0 / 360.0
 
-var pH: float = 7.0 setget set_ph
+var pH: float = 7.0
 var buffer_capacity = 1.0
 
-func set_ph(value):
-	pH = clamp(value, 0, 14)
-
-const upgrade_time = 0.5
-#const upgrade_time = 2.0
+#const upgrade_time = 0.5
+const upgrade_time = 2.0
 const upgrade_delay = 0.5
 
-const stage_time_base: float = 0.5
-#const stage_time_base: float = 5.0
+#const stage_time_base: float = 0.5
+const stage_time_base: float = 5.0
 var stage_time: float = stage_time_base
 
 # A floating point factor. Set it to 0.5 to grow half-speed, 2.0 to grow 2x-speed, etc.
@@ -34,7 +31,8 @@ func _ready():
 	randomize()
 	
 	# Randomize each plant's needs and resistance
-	pH = rand_range(5.0, 14.0)
+	#pH = rand_range(5.0, 14.0)
+	pH = 7.0
 	buffer_capacity = rand_range(0.4, 1.0)
 	
 	set_growth_rate_factor(1.0)
@@ -56,11 +54,30 @@ func reset():
 	
 	$StageTimer.start(stage_time)
 
+func feed(new_ph: float):
+	if stage == HARVEST:
+		return
+	pH = clamp(new_ph, 0, 14)
 
-func _process(delta):
+func acidification(delta):
+	if stage == HARVEST:
+		return
+	
+	var already_zero = pH == 0
+	
 	# Acidification
 	var acid = Global.rain_acidity_per_sec * delta
-	set_ph(pH - buffer_capacity * acid)
+	var new = pH - (buffer_capacity * acid)
+	
+	pH = clamp(new, 0, 14)
+	
+	if pH == 0 and !already_zero:
+		$DeathTimer.start()
+	elif pH != 0:
+		$DeathTimer.stop()
+
+func _process(delta):
+	acidification(delta)
 	
 	update_color()
 	
@@ -145,5 +162,9 @@ func _on_Tween_tween_all_completed():
 	else:
 		$StageTimer.start(stage_time)
 
-func _on_DeathAnimation_animation_finished(anim_name):
+func _on_DeathAnimation_animation_finished(_anim_name):
 	queue_free()
+
+
+func _on_DeathTimer_timeout():
+	$DeathAnimation.play("death")
