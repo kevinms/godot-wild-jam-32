@@ -25,7 +25,6 @@ var drone_pos: Vector3
 var dead: bool = false
 
 func death_physics(delta):
-	print("death physics")
 	#$Pin.rotate_y(delta)
 	#var velocity = Vector3.DOWN * 2
 	#$Pin.global_transform.origin -= velocity * delta
@@ -201,6 +200,10 @@ func crash():
 func _on_HurtBox_area_entered(area):
 	health -= 1
 	$DamageSound.play()
+	#var doot_pos = $Drone.global_transform.origin + Vector3.UP + Vector3.FORWARD * 2
+	var doot_pos = $Drone.global_transform.origin + Vector3.UP
+	var duration = 0.3
+	Global.new_doot("+1 dmg", doot_pos, 0.4, duration, Global.DOOT_NONE, false)
 	
 	# Pretend the player is in the same plane as the drone
 	var player_pos = player.global_transform.origin

@@ -1,0 +1,70 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://assets/feed/disc.glb" type="PackedScene" id=1]
+[ext_resource path="res://feed/Feed.gd" type="Script" id=2]
+[ext_resource path="res://assets/feed/upgrade-ring.obj" type="ArrayMesh" id=3]
+
+[sub_resource type="CylinderMesh" id=10]
+resource_local_to_scene = true
+top_radius = 0.2
+bottom_radius = 0.2
+height = 10.0
+
+[sub_resource type="SpatialMaterial" id=12]
+flags_transparent = true
+flags_unshaded = true
+albedo_color = Color( 0.0627451, 0.901961, 0.447059, 0.729412 )
+refraction_enabled = true
+refraction_scale = 0.05
+refraction_texture_channel = 0
+
+[sub_resource type="SpatialMaterial" id=32]
+params_cull_mode = 2
+emission_enabled = true
+emission = Color( 0.0705882, 0.901961, 0.414828, 1 )
+emission_energy = 1.0
+emission_operator = 0
+emission_on_uv2 = false
+
+[sub_resource type="Curve" id=29]
+max_value = 7.0
+_data = [ Vector2( 0, 0.563636 ), 0.0, 0.0, 0, 0, Vector2( 1, 6.68182 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=30]
+curve = SubResource( 29 )
+
+[sub_resource type="ParticlesMaterial" id=31]
+gravity = Vector3( 0, 0, 0 )
+scale_curve = SubResource( 30 )
+
+[node name="Feed" type="Spatial"]
+script = ExtResource( 2 )
+
+[node name="disc" parent="." instance=ExtResource( 1 )]
+transform = Transform( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
+
+[node name="Circle" parent="disc" index="0"]
+visible = false
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+mesh = SubResource( 10 )
+material/0 = SubResource( 12 )
+
+[node name="Particles" type="Particles" parent="."]
+material_override = SubResource( 32 )
+emitting = false
+amount = 4
+lifetime = 0.5
+one_shot = true
+process_material = SubResource( 31 )
+draw_pass_1 = ExtResource( 3 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+
+[connection signal="tween_all_completed" from="Tween" to="." method="_on_Tween_tween_all_completed"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+
+[editable path="disc"]

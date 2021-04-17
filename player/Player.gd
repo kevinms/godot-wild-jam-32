@@ -71,9 +71,24 @@ func _process(delta):
 		while time_since_last_fire > fire_rate:
 			fire_laser()
 			time_since_last_fire -= fire_rate
-	elif Input.is_action_just_pressed("action"):
+	elif Input.is_action_just_pressed("plant"):
 		emit_signal("place_a_plant")
+	elif Input.is_action_just_pressed("feed"):
+		if Global.gold >= Global.feed_price:
+			Global.gold -= Global.feed_price
+			
+			var doot_pos = global_transform.origin + Vector3.UP * 3 + Vector3.RIGHT * 4
+			var duration = 0.5
+			Global.new_doot("-1 gold", doot_pos, 0.6, duration, Global.DOOT_NONE, true)
+			
+			var feed = feed_scene.instance()
+			var root = get_node("/root/World")
+			feed.radius = 7.0
+			feed.pos = global_transform.origin
+			feed.pos.y = -1.4
+			root.add_child(feed)
 
+onready var feed_scene = preload("res://feed/Feed.tscn")
 onready var laser_scene = preload("res://player/Laser.tscn")
 
 func fire_laser():
@@ -101,12 +116,16 @@ func harvest(plant):
 		return
 	
 	Global.gold += Global.fruit_price
+	
+	var doot_pos = global_transform.origin + Vector3.UP * 3 + Vector3.FORWARD * 4
+	var duration = 0.5
+	Global.new_doot("+" + str(Global.fruit_price) + " Gold", doot_pos, 0.6, duration, Global.DOOT_NONE, false)
 
 func _on_Hitbox_body_entered(body):
 	if body.is_in_group("plant"):
 		print("plant in range", body.get_path())
 		var plant = body
-		plant.set_ph(7.0)
+		#plant.set_ph(7.0)
 		
 		harvest(plant)
 
@@ -125,8 +144,15 @@ func _on_Hitbox_body_exited(body):
 
 
 func _on_Hurtbox_area_entered(area):
+	if dead:
+		return
+	
 	$DamageSound.play()
 	Global.damage_player(1)
+	
+	var doot_pos = global_transform.origin + Vector3.UP * 3 + Vector3.FORWARD * 4
+	var duration = 0.5
+	Global.new_doot("-1 health", doot_pos, 0.6, duration, Global.DOOT_NONE, false)
 
 func _on_Global_player_died():
 	dead = true

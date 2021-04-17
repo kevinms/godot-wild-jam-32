@@ -44,7 +44,7 @@ font_path = "res://assets/font/rainyhearts.ttf"
 size = 32
 font_data = SubResource( 5 )
 
-[sub_resource type="Animation" id=15]
+[sub_resource type="Animation" id=7]
 resource_name = "zoom"
 tracks/0/type = "value"
 tracks/0/path = NodePath("Camera:distance")
@@ -71,7 +71,7 @@ tracks/1/keys = {
 "values": [ 51.0, 20.0 ]
 }
 
-[sub_resource type="ParticlesMaterial" id=7]
+[sub_resource type="ParticlesMaterial" id=8]
 emission_shape = 2
 emission_box_extents = Vector3( 50, 50, 10 )
 direction = Vector3( 0, 0, -1 )
@@ -79,29 +79,29 @@ spread = 0.0
 gravity = Vector3( 0, 0, 0 )
 initial_velocity = 70.0
 
-[sub_resource type="SpatialMaterial" id=8]
+[sub_resource type="SpatialMaterial" id=9]
 flags_transparent = true
 flags_unshaded = true
 params_cull_mode = 2
 params_billboard_mode = 2
 albedo_texture = ExtResource( 4 )
 
-[sub_resource type="PlaneMesh" id=9]
-material = SubResource( 8 )
+[sub_resource type="PlaneMesh" id=10]
+material = SubResource( 9 )
 size = Vector2( 1, 1 )
 
-[sub_resource type="PlaneMesh" id=10]
+[sub_resource type="PlaneMesh" id=11]
 size = Vector2( 30, 30 )
 
-[sub_resource type="SphereMesh" id=11]
-
-[sub_resource type="SpatialMaterial" id=12]
-albedo_color = Color( 0.909804, 0.0509804, 0.0509804, 1 )
+[sub_resource type="SphereMesh" id=12]
 
 [sub_resource type="SpatialMaterial" id=13]
-albedo_color = Color( 0.0784314, 0.0509804, 0.976471, 1 )
+albedo_color = Color( 0.909804, 0.0509804, 0.0509804, 1 )
 
 [sub_resource type="SpatialMaterial" id=14]
+albedo_color = Color( 0.0784314, 0.0509804, 0.976471, 1 )
+
+[sub_resource type="SpatialMaterial" id=15]
 albedo_color = Color( 0.027451, 0.905882, 0.266667, 1 )
 
 [node name="World" type="Spatial"]
@@ -309,7 +309,7 @@ __meta__ = {
 visible = false
 
 [node name="DeathAnimation" type="AnimationPlayer" parent="."]
-anims/zoom = SubResource( 15 )
+anims/zoom = SubResource( 7 )
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 pause_mode = 2
@@ -332,8 +332,8 @@ transform = Transform( 1, 0, 0, 0, -2.98023e-08, 1, 0, -1, -2.98023e-08, 0, 32.4
 amount = 1024
 visibility_aabb = AABB( -47.45, -46.61, -71.8189, 100, 100, 134.422 )
 local_coords = false
-process_material = SubResource( 7 )
-draw_pass_1 = SubResource( 9 )
+process_material = SubResource( 8 )
+draw_pass_1 = SubResource( 10 )
 script = ExtResource( 5 )
 
 [node name="RainSound" type="AudioStreamPlayer" parent="Rain"]
@@ -368,7 +368,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 36.5034, 0 )
 script = ExtResource( 19 )
 
 [node name="DropPlane" type="MeshInstance" parent="DroneSpawner"]
-mesh = SubResource( 10 )
+mesh = SubResource( 11 )
 material/0 = null
 
 [node name="Ammo" parent="." instance=ExtResource( 11 )]
@@ -380,23 +380,23 @@ script = ExtResource( 13 )
 
 [node name="DropPlane" type="MeshInstance" parent="ItemDrop"]
 visible = false
-mesh = SubResource( 10 )
+mesh = SubResource( 11 )
 material/0 = null
 
 [node name="DebugFrom" type="MeshInstance" parent="ItemDrop"]
 visible = false
-mesh = SubResource( 11 )
-material/0 = SubResource( 12 )
+mesh = SubResource( 12 )
+material/0 = SubResource( 13 )
 
 [node name="DebugTo" type="MeshInstance" parent="ItemDrop"]
 visible = false
-mesh = SubResource( 11 )
-material/0 = SubResource( 13 )
+mesh = SubResource( 12 )
+material/0 = SubResource( 14 )
 
 [node name="DebugHit" type="MeshInstance" parent="ItemDrop"]
 visible = false
-mesh = SubResource( 11 )
-material/0 = SubResource( 14 )
+mesh = SubResource( 12 )
+material/0 = SubResource( 15 )
 
 [node name="Building" parent="." instance=ExtResource( 3 )]
 

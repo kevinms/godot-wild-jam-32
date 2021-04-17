@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/upgrade-ring.obj-c7ec9d185ae9155baa703ff2f3515259.mesh"
+
+[deps]
+
+files=[ "res://.import/upgrade-ring.obj-c7ec9d185ae9155baa703ff2f3515259.mesh" ]
+
+source_file="res://assets/feed/upgrade-ring.obj"
+dest_files=[ "res://.import/upgrade-ring.obj-c7ec9d185ae9155baa703ff2f3515259.mesh", "res://.import/upgrade-ring.obj-c7ec9d185ae9155baa703ff2f3515259.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

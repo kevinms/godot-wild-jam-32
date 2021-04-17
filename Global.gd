@@ -25,6 +25,7 @@ var player_dead: bool = false
 
 var plant_price = 5
 var fruit_price = 10
+var feed_price = 1
 
 func reset():
 	# Let the Rain node set these
@@ -96,3 +97,27 @@ func sphere_query(world: World, global_pos: Vector3, radius: float, excludes: Ar
 	query.collision_mask = collision_mask
 	
 	return space_state.intersect_shape(query, max_results)
+
+func shape_query(world: World, global_pos: Vector3, shape: Shape, excludes: Array = [], collision_mask: int = 0x7FFFFFFF, max_results: int = 30) -> Array:
+	var space_state = world.direct_space_state
+	
+	var query = PhysicsShapeQueryParameters.new()
+	query.set_shape(shape)
+	query.transform = Transform(Basis.IDENTITY, global_pos)
+	if len(excludes) > 0:
+		query.set_exclude(excludes)
+	query.collision_mask = collision_mask
+	
+	return space_state.intersect_shape(query, max_results)
+
+onready var doot_scene = preload("res://hud/Doot.tscn")
+
+const DOOT_NONE = 0
+const DOOT_UP   = 1
+
+func new_doot(text: String, global_pos: Vector3, scale: float = 1.0, duration: float = 1.0, type = DOOT_UP, sound: bool = true):
+	var world = get_node("/root/World")
+	
+	var doot = doot_scene.instance()
+	world.add_child(doot)
+	doot.start(text, global_pos, scale, duration, type, sound)

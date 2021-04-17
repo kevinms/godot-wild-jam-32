@@ -63,6 +63,12 @@ func set_ph(new_ph: float):
 	
 	var already_zero = pH == 0
 	
+	if new_ph > pH:
+		var doot_pos = global_transform.origin + Vector3.UP * 3 + Vector3.FORWARD * 4
+		var duration = 0.8
+		Global.new_doot("pH UP", doot_pos, 1.0, duration, Global.DOOT_UP)
+		#$UpSound.play()
+	
 	pH = clamp(new_ph, 0, 14)
 	
 	if pH == 0 and !already_zero:

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/beep_01.ogg-cdcc9129ab9cdb9cefa32b70379a88b7.oggstr"
+
+[deps]
+
+source_file="res://assets/sfx/hud/beep_01.ogg"
+dest_files=[ "res://.import/beep_01.ogg-cdcc9129ab9cdb9cefa32b70379a88b7.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
