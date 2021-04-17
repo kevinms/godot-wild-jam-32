@@ -1,20 +1,100 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://assets/drone/drone.glb" type="PackedScene" id=1]
 [ext_resource path="res://drone/Drone.gd" type="Script" id=2]
 [ext_resource path="res://assets/sfx/drone/1-181071-B.ogg" type="AudioStream" id=3]
+[ext_resource path="res://assets/sfx/drone/sfx_15c.ogg" type="AudioStream" id=4]
+[ext_resource path="res://assets/sfx/drone/synth_misc_06.ogg" type="AudioStream" id=5]
+[ext_resource path="res://assets/drone/smoke.png" type="Texture" id=6]
+[ext_resource path="res://assets/drone/flame.png" type="Texture" id=7]
 
 [sub_resource type="SphereShape" id=1]
-radius = 5.0
+radius = 0.338162
 
 [sub_resource type="SphereMesh" id=2]
 radius = 0.5
 height = 1.0
 
-[sub_resource type="SphereShape" id=3]
-radius = 3.0
+[sub_resource type="SphereShape" id=5]
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="SphereShape" id=7]
+radius = 2.95133
+
+[sub_resource type="SphereMesh" id=8]
+radius = 2.95
+height = 5.9
+
+[sub_resource type="Curve" id=10]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), -2.95555, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=11]
+curve = SubResource( 10 )
+
+[sub_resource type="ParticlesMaterial" id=9]
+emission_shape = 2
+emission_box_extents = Vector3( 3, 0.2, 0.2 )
+direction = Vector3( 0, 1, 0 )
+spread = 2.09
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 5.0
+scale_curve = SubResource( 11 )
+
+[sub_resource type="SpatialMaterial" id=12]
+flags_transparent = true
+flags_vertex_lighting = true
+params_diffuse_mode = 4
+params_specular_mode = 3
+params_blend_mode = 1
+params_billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+albedo_texture = ExtResource( 6 )
+
+[sub_resource type="QuadMesh" id=13]
+material = SubResource( 12 )
+size = Vector2( 2, 2 )
+
+[sub_resource type="Curve" id=14]
+max_value = 100.0
+_data = [ Vector2( 0, 53.2955 ), 0.0, 0.0, 0, 0, Vector2( 0.625, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=15]
+curve = SubResource( 14 )
+
+[sub_resource type="Curve" id=16]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), -0.0499997, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=17]
+curve = SubResource( 16 )
+
+[sub_resource type="ParticlesMaterial" id=18]
+lifetime_randomness = 0.57
+emission_shape = 1
+emission_sphere_radius = 2.0
+direction = Vector3( 0, 1, 0 )
+gravity = Vector3( 0, -100, 0 )
+initial_velocity = 20.0
+damping = 53.49
+damping_curve = SubResource( 15 )
+scale_curve = SubResource( 17 )
+
+[sub_resource type="SpatialMaterial" id=19]
+flags_transparent = true
+params_diffuse_mode = 2
+params_specular_mode = 2
+params_blend_mode = 1
+params_billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+albedo_texture = ExtResource( 7 )
+
+[sub_resource type="QuadMesh" id=20]
+material = SubResource( 19 )
+size = Vector2( 2, 2 )
+
+[sub_resource type="Animation" id=6]
 length = 5.0
 loop = true
 step = 1.0
@@ -32,7 +112,6 @@ tracks/0/keys = {
 }
 
 [node name="Drone" type="Spatial" groups=[
-"drone",
 "enemy",
 ]]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.867775, 0 )
@@ -40,9 +119,11 @@ script = ExtResource( 2 )
 
 [node name="Pin" type="KinematicBody" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.75521, 0 )
-collision_layer = 17
+collision_layer = 3
+collision_mask = 3
 
 [node name="CollisionShape" type="CollisionShape" parent="Pin"]
+transform = Transform( 1.97395, 0, 0, 0, 1.97395, 0, 0, 0, 1.97395, 0, 0, 0 )
 shape = SubResource( 1 )
 
 [node name="ConeTwistJoint" type="ConeTwistJoint" parent="Pin"]
@@ -57,11 +138,30 @@ mesh = SubResource( 2 )
 material/0 = null
 
 [node name="Drone" type="RigidBody" parent="."]
-collision_layer = 3
+collision_layer = 0
+collision_mask = 0
 mass = 8.0
 
 [node name="CollisionShape" type="CollisionShape" parent="Drone"]
-shape = SubResource( 3 )
+transform = Transform( 2.91339, 0, 0, 0, 2.91339, 0, 0, 0, 2.91339, 0, 0, 0 )
+shape = SubResource( 5 )
+
+[node name="HurtBox" type="Area" parent="Drone" groups=[
+"drone",
+]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.96046e-08, 0 )
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape" type="CollisionShape" parent="Drone/HurtBox"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 7 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Drone/HurtBox"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+visible = false
+mesh = SubResource( 8 )
+material/0 = null
 
 [node name="drone" parent="Drone" instance=ExtResource( 1 )]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
@@ -73,11 +173,48 @@ shadow_color = Color( 0.760784, 0.968627, 0.992157, 1 )
 spot_range = 22.4752
 spot_angle = 15.1766
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/PatternCircle = SubResource( 4 )
+[node name="SmokeParticles" type="Particles" parent="Drone"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.533852, 0.479808 )
+emitting = false
+amount = 25
+local_coords = false
+process_material = SubResource( 9 )
+draw_pass_1 = SubResource( 13 )
 
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+[node name="ExplosionParticles" type="Particles" parent="Drone"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.533852, 0.479808 )
+emitting = false
+amount = 100
+one_shot = true
+explosiveness = 0.71
+randomness = 0.38
+local_coords = false
+process_material = SubResource( 18 )
+draw_pass_1 = SubResource( 20 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/PatternCircle = SubResource( 6 )
+
+[node name="FlySound" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource( 3 )
 autoplay = true
+
+[node name="DamageSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+
+[node name="DeathSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+volume_db = -8.0
+
+[node name="CrashTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="DeathTimer" type="Timer" parent="."]
+wait_time = 0.4
+
+[connection signal="area_entered" from="Drone/HurtBox" to="." method="_on_HurtBox_area_entered"]
+[connection signal="finished" from="DeathSound" to="." method="_on_DeathSound_finished"]
+[connection signal="timeout" from="CrashTimer" to="." method="_on_CrashTimer_timeout"]
+[connection signal="timeout" from="DeathTimer" to="." method="_on_DeathTimer_timeout"]
 
 [editable path="Drone/drone"]

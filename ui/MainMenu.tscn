@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://assets/font/rainyhearts.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Camera.gd" type="Script" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://ui/MainPanel.gd" type="Script" id=10]
 [ext_resource path="res://assets/sfx/rain/2-82367-A.ogg" type="AudioStream" id=11]
 [ext_resource path="res://ui/CreditsPanel.gd" type="Script" id=12]
+[ext_resource path="res://drone/Drone.tscn" type="PackedScene" id=13]
 
 [sub_resource type="DynamicFont" id=12]
 size = 48
@@ -338,7 +339,9 @@ target_path = NodePath("../Player")
 distance = 15.0
 angle_degrees = 20.0
 
-[node name="Player" type="MeshInstance" parent="."]
+[node name="Player" type="MeshInstance" parent="." groups=[
+"player",
+]]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1.62891, 0, -2.415 )
 mesh = SubResource( 4 )
 material/0 = null
@@ -361,6 +364,12 @@ shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource( 5 )
+
+[node name="Drone" parent="." instance=ExtResource( 13 )]
+transform = Transform( -0.999994, 0, -0.00335112, 0, 1, 0, 0.00335112, 0, -0.999994, -0.678, 2, -11.44 )
+
+[node name="Drone2" parent="." instance=ExtResource( 13 )]
+transform = Transform( -0.718029, 0, -0.696013, 0, 1, 0, 0.696013, 0, -0.718029, -16.617, 2, -16.549 )
 
 [node name="Building9" parent="." instance=ExtResource( 8 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -34.2579, 4.29789, -128.605 )

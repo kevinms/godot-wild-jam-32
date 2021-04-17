@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=2]
+[gd_scene load_steps=35 format=2]
 
 [ext_resource path="res://Camera.gd" type="Script" id=1]
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=2]
@@ -9,7 +9,7 @@
 [ext_resource path="res://plant/PlantMesh.tscn" type="PackedScene" id=7]
 [ext_resource path="res://World.gd" type="Script" id=8]
 [ext_resource path="res://hud/HUD.tscn" type="PackedScene" id=9]
-[ext_resource path="res://ui/PopupMenu.tscn" type="PackedScene" id=10]
+[ext_resource path="res://drone/Drone.tscn" type="PackedScene" id=10]
 [ext_resource path="res://pickups/Ammo.tscn" type="PackedScene" id=11]
 [ext_resource path="res://plant/StaticPlant.tscn" type="PackedScene" id=12]
 [ext_resource path="res://ItemDrop.gd" type="Script" id=13]
@@ -17,32 +17,61 @@
 [ext_resource path="res://assets/font/rainyhearts.ttf" type="DynamicFontData" id=15]
 [ext_resource path="res://ui/GameOverPanel.gd" type="Script" id=16]
 [ext_resource path="res://ui/ui-box-style.tres" type="StyleBox" id=17]
+[ext_resource path="res://ui/PopupMenu.tscn" type="PackedScene" id=18]
+[ext_resource path="res://DroneSpawner.gd" type="Script" id=19]
 
-[sub_resource type="DynamicFont" id=12]
+[sub_resource type="DynamicFont" id=1]
 size = 48
 font_data = ExtResource( 15 )
 
-[sub_resource type="DynamicFont" id=13]
+[sub_resource type="DynamicFont" id=2]
 size = 32
 font_data = ExtResource( 15 )
 
-[sub_resource type="DynamicFontData" id=10]
+[sub_resource type="DynamicFontData" id=3]
 antialiased = false
 font_path = "res://assets/font/rainyhearts.ttf"
 
-[sub_resource type="DynamicFont" id=16]
+[sub_resource type="DynamicFont" id=4]
 size = 42
-font_data = SubResource( 10 )
+font_data = SubResource( 3 )
 
-[sub_resource type="DynamicFontData" id=14]
+[sub_resource type="DynamicFontData" id=5]
 antialiased = false
 font_path = "res://assets/font/rainyhearts.ttf"
 
-[sub_resource type="DynamicFont" id=15]
+[sub_resource type="DynamicFont" id=6]
 size = 32
-font_data = SubResource( 14 )
+font_data = SubResource( 5 )
 
-[sub_resource type="ParticlesMaterial" id=1]
+[sub_resource type="Animation" id=15]
+resource_name = "zoom"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Camera:distance")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 35.327, 20.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Camera:angle_degrees")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 51.0, 20.0 ]
+}
+
+[sub_resource type="ParticlesMaterial" id=7]
 emission_shape = 2
 emission_box_extents = Vector3( 50, 50, 10 )
 direction = Vector3( 0, 0, -1 )
@@ -50,37 +79,35 @@ spread = 0.0
 gravity = Vector3( 0, 0, 0 )
 initial_velocity = 70.0
 
-[sub_resource type="SpatialMaterial" id=2]
+[sub_resource type="SpatialMaterial" id=8]
 flags_transparent = true
 flags_unshaded = true
 params_cull_mode = 2
 params_billboard_mode = 2
 albedo_texture = ExtResource( 4 )
 
-[sub_resource type="PlaneMesh" id=3]
-material = SubResource( 2 )
+[sub_resource type="PlaneMesh" id=9]
+material = SubResource( 8 )
 size = Vector2( 1, 1 )
 
-[sub_resource type="PlaneMesh" id=4]
+[sub_resource type="PlaneMesh" id=10]
 size = Vector2( 30, 30 )
 
-[sub_resource type="SphereMesh" id=5]
+[sub_resource type="SphereMesh" id=11]
 
-[sub_resource type="SpatialMaterial" id=6]
+[sub_resource type="SpatialMaterial" id=12]
 albedo_color = Color( 0.909804, 0.0509804, 0.0509804, 1 )
 
-[sub_resource type="SpatialMaterial" id=7]
+[sub_resource type="SpatialMaterial" id=13]
 albedo_color = Color( 0.0784314, 0.0509804, 0.976471, 1 )
 
-[sub_resource type="SpatialMaterial" id=8]
+[sub_resource type="SpatialMaterial" id=14]
 albedo_color = Color( 0.027451, 0.905882, 0.266667, 1 )
 
 [node name="World" type="Spatial"]
 script = ExtResource( 8 )
 
 [node name="HUD" parent="." instance=ExtResource( 9 )]
-
-[node name="PopupMenu" parent="." instance=ExtResource( 10 )]
 
 [node name="GameOverPanel" type="Panel" parent="."]
 pause_mode = 2
@@ -108,7 +135,7 @@ margin_top = -208.0
 margin_right = 109.5
 margin_bottom = -163.0
 size_flags_horizontal = 0
-custom_fonts/font = SubResource( 12 )
+custom_fonts/font = SubResource( 1 )
 text = "Game Over"
 align = 1
 valign = 1
@@ -121,7 +148,7 @@ margin_left = 77.5
 margin_top = 393.361
 margin_right = 179.5
 margin_bottom = 429.361
-custom_fonts/font = SubResource( 13 )
+custom_fonts/font = SubResource( 2 )
 text = "Menu"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -132,13 +159,13 @@ margin_left = 238.5
 margin_top = 393.361
 margin_right = 340.5
 margin_bottom = 429.361
-custom_fonts/font = SubResource( 13 )
+custom_fonts/font = SubResource( 2 )
 text = "Restart"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TipsText" type="Label" parent="GameOverPanel"]
+[node name="Score" type="Label" parent="GameOverPanel"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -148,8 +175,8 @@ margin_top = -139.0
 margin_right = 89.5
 margin_bottom = -94.0
 size_flags_horizontal = 0
-custom_fonts/font = SubResource( 16 )
-text = "Rating: S"
+custom_fonts/font = SubResource( 4 )
+text = "Score:"
 align = 1
 valign = 1
 __meta__ = {
@@ -176,7 +203,7 @@ __meta__ = {
 margin_right = 174.0
 margin_bottom = 30.0
 size_flags_horizontal = 0
-custom_fonts/font = SubResource( 15 )
+custom_fonts/font = SubResource( 6 )
 text = "Drones Killed:"
 align = 1
 valign = 1
@@ -189,7 +216,7 @@ margin_left = 224.0
 margin_right = 250.0
 margin_bottom = 30.0
 size_flags_horizontal = 0
-custom_fonts/font = SubResource( 15 )
+custom_fonts/font = SubResource( 6 )
 text = "45"
 align = 1
 valign = 1
@@ -202,7 +229,7 @@ margin_top = 34.0
 margin_right = 60.0
 margin_bottom = 64.0
 size_flags_horizontal = 0
-custom_fonts/font = SubResource( 15 )
+custom_fonts/font = SubResource( 6 )
 text = "Gold:"
 align = 1
 valign = 1
@@ -216,7 +243,7 @@ margin_top = 34.0
 margin_right = 266.0
 margin_bottom = 64.0
 size_flags_horizontal = 0
-custom_fonts/font = SubResource( 15 )
+custom_fonts/font = SubResource( 6 )
 text = "290"
 align = 1
 valign = 1
@@ -229,7 +256,7 @@ margin_top = 68.0
 margin_right = 148.0
 margin_bottom = 98.0
 size_flags_horizontal = 0
-custom_fonts/font = SubResource( 15 )
+custom_fonts/font = SubResource( 6 )
 text = "Plants Died:"
 align = 1
 valign = 1
@@ -243,7 +270,7 @@ margin_top = 68.0
 margin_right = 238.0
 margin_bottom = 98.0
 size_flags_horizontal = 0
-custom_fonts/font = SubResource( 15 )
+custom_fonts/font = SubResource( 6 )
 text = "3"
 align = 1
 valign = 1
@@ -256,7 +283,7 @@ margin_top = 102.0
 margin_right = 220.0
 margin_bottom = 132.0
 size_flags_horizontal = 0
-custom_fonts/font = SubResource( 15 )
+custom_fonts/font = SubResource( 6 )
 text = "Plants Harvested:"
 align = 1
 valign = 1
@@ -270,13 +297,19 @@ margin_top = 102.0
 margin_right = 252.0
 margin_bottom = 132.0
 size_flags_horizontal = 0
-custom_fonts/font = SubResource( 15 )
+custom_fonts/font = SubResource( 6 )
 text = "92"
 align = 1
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="PauseMenu" parent="." instance=ExtResource( 18 )]
+visible = false
+
+[node name="DeathAnimation" type="AnimationPlayer" parent="."]
+anims/zoom = SubResource( 15 )
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 pause_mode = 2
@@ -299,8 +332,8 @@ transform = Transform( 1, 0, 0, 0, -2.98023e-08, 1, 0, -1, -2.98023e-08, 0, 32.4
 amount = 1024
 visibility_aabb = AABB( -47.45, -46.61, -71.8189, 100, 100, 134.422 )
 local_coords = false
-process_material = SubResource( 1 )
-draw_pass_1 = SubResource( 3 )
+process_material = SubResource( 7 )
+draw_pass_1 = SubResource( 9 )
 script = ExtResource( 5 )
 
 [node name="RainSound" type="AudioStreamPlayer" parent="Rain"]
@@ -326,6 +359,17 @@ shadow_enabled = true
 [node name="PlantMesh" parent="." instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.0494, -0.758, 0 )
 
+[node name="Drone" parent="." instance=ExtResource( 10 )]
+transform = Transform( -0.808925, 0, 0.587912, 0, 1, 0, -0.587912, 0, -0.808925, 13.5235, 3.21419, -16.1172 )
+
+[node name="DroneSpawner" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 33.5614, -9.79803 )
+script = ExtResource( 19 )
+
+[node name="DropPlane" type="MeshInstance" parent="DroneSpawner"]
+mesh = SubResource( 10 )
+material/0 = null
+
 [node name="Ammo" parent="." instance=ExtResource( 11 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 5.83028, -1.74439, 0 )
 
@@ -335,23 +379,23 @@ script = ExtResource( 13 )
 
 [node name="DropPlane" type="MeshInstance" parent="ItemDrop"]
 visible = false
-mesh = SubResource( 4 )
+mesh = SubResource( 10 )
 material/0 = null
 
 [node name="DebugFrom" type="MeshInstance" parent="ItemDrop"]
 visible = false
-mesh = SubResource( 5 )
-material/0 = SubResource( 6 )
+mesh = SubResource( 11 )
+material/0 = SubResource( 12 )
 
 [node name="DebugTo" type="MeshInstance" parent="ItemDrop"]
 visible = false
-mesh = SubResource( 5 )
-material/0 = SubResource( 7 )
+mesh = SubResource( 11 )
+material/0 = SubResource( 13 )
 
 [node name="DebugHit" type="MeshInstance" parent="ItemDrop"]
 visible = false
-mesh = SubResource( 5 )
-material/0 = SubResource( 8 )
+mesh = SubResource( 11 )
+material/0 = SubResource( 14 )
 
 [node name="Building" parent="." instance=ExtResource( 3 )]
 

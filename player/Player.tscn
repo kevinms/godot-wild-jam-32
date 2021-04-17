@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://player/Player.gd" type="Script" id=1]
 [ext_resource path="res://assets/sfx/player/synth_beep_02.ogg" type="AudioStream" id=2]
@@ -28,6 +28,10 @@ rim_tint = 0.5
 
 [sub_resource type="SphereShape" id=6]
 radius = 3.0
+
+[sub_resource type="CapsuleShape" id=7]
+radius = 0.75
+height = 1.5
 
 [node name="Player" type="KinematicBody" groups=[
 "player",
@@ -60,9 +64,18 @@ material/0 = SubResource( 5 )
 [node name="CollisionShape" type="CollisionShape" parent="Hitbox"]
 shape = SubResource( 6 )
 
+[node name="Hurtbox" type="Area" parent="."]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape" type="CollisionShape" parent="Hurtbox"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+shape = SubResource( 7 )
+
 [node name="DamageSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 2 )
 volume_db = -16.0
 
 [connection signal="body_entered" from="Hitbox" to="." method="_on_Hitbox_body_entered"]
 [connection signal="body_exited" from="Hitbox" to="." method="_on_Hitbox_body_exited"]
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]

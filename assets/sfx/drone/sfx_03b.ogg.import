@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/sfx_03b.ogg-e0782f0d021c60f2ecec09abe0c0f8a0.oggstr"
+
+[deps]
+
+source_file="res://assets/sfx/drone/sfx_03b.ogg"
+dest_files=[ "res://.import/sfx_03b.ogg-e0782f0d021c60f2ecec09abe0c0f8a0.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

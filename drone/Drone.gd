@@ -10,6 +10,8 @@ var health: float = 3.0
 
 func _ready():
 	randomize()
+	
+	$Drone/SmokeParticles.emitting = false
 
 func global_player_dir() -> Vector3:
 	var dir = player.global_transform.origin - $Pin.global_transform.origin
@@ -20,7 +22,26 @@ var drone_plane: Plane
 var player_plane: Plane
 var drone_pos: Vector3
 
+var dead: bool = false
+
+func death_physics(delta):
+	print("death physics")
+	#$Pin.rotate_y(delta)
+	#var velocity = Vector3.DOWN * 2
+	#$Pin.global_transform.origin -= velocity * delta
+	
+	var velocity = Vector3.DOWN * speed
+	$Pin.move_and_slide(velocity, Vector3.UP)
+
+var knockback_dir: Vector3
+var knockback_duration: float
+
+var preferred_drone_y = 7.0
+
 func _physics_process(delta):
+	if dead:
+		death_physics(delta)
+		return
 	
 	drone_plane = Plane(Vector3.UP, $Pin.global_transform.origin.y)
 	player_plane = Plane(Vector3.UP, player.global_transform.origin.y)
@@ -53,7 +74,10 @@ func _physics_process(delta):
 	if since_last_fire >= next_fire:
 		since_last_fire -= next_fire
 		next_fire = rand_range(1.0, 3.0)
-		fire_laser()
+		
+		# Only fire if the drone is close to the preferred height
+		if abs(preferred_drone_y - drone_pos.y) < 2.0:
+			fire_laser()
 	
 	
 	var move_dir: Vector3
@@ -93,6 +117,23 @@ func _physics_process(delta):
 		move_dir *= -1.0/len(objects)
 		move_dir = move_dir.normalized()
 	
+	# Get back to the correct drone plane of preferred_drone_y
+	if drone_pos.y > preferred_drone_y:
+		
+		# See if we are off by up to 1 unit
+		var magnitude_off_by = clamp(preferred_drone_y - drone_pos.y, -1, 1)
+		
+		# Add a little to move_dir to nudge back towards preferred_drone_y
+		move_dir = (move_dir + Vector3(0, magnitude_off_by, 0)).normalized()
+	
+	# Override with any knockback
+	if knockback_duration > 0:
+		knockback_duration -= delta
+		move_dir = knockback_dir
+	
+	#DEBUG: no movement
+	#move_dir = Vector3.ZERO
+	
 	# Move the drone
 	var velocity = move_dir * speed
 	$Pin.move_and_slide(velocity, Vector3.UP)
@@ -127,6 +168,9 @@ func on_plane():
 
 func fire_laser():
 	var root = get_node("/root/World")
+	if root == null:
+		return
+	
 	var laser = laser_scene.instance()
 	#laser.global_transform = $Pin.global_transform
 	#laser.global_transform.origin.y = player.global_transform.origin.y
@@ -139,3 +183,49 @@ func fire_laser():
 	laser.speed = 20.0
 	root.add_child(laser)
 	laser.color = Color(1,0,0)
+
+func crash():
+	$CrashTimer.start()
+	$Drone/SmokeParticles.emitting = true
+	$Drone/HurtBox.collision_layer = 0
+	$Drone/HurtBox.collision_mask = 0
+	$Pin.collision_layer = 0
+	$Pin.collision_mask = 0
+	$Pin/ConeTwistJoint.queue_free()
+	$Drone.collision_layer = 1
+	$Drone.collision_mask = 1
+	Global.drones_killed += 1
+	
+	dead = true
+
+func _on_HurtBox_area_entered(area):
+	health -= 1
+	$DamageSound.play()
+	
+	# Pretend the player is in the same plane as the drone
+	var player_pos = player.global_transform.origin
+	player_pos.y = $Pin.global_transform.origin.y
+	
+	knockback_dir = player_pos.direction_to($Pin.global_transform.origin)
+	knockback_dir
+	knockback_duration = 1.0
+	
+	if health <= 0:
+		crash()
+
+func _on_CrashTimer_timeout():
+	destroy()
+
+func destroy():
+	$Drone/SmokeParticles.emitting = false
+	$Drone/ExplosionParticles.emitting = true
+	$Drone/drone.visible = false
+	$DeathSound.play()
+	$DeathTimer.start()
+
+func _on_DeathTimer_timeout():
+	#queue_free()
+	pass
+
+func _on_DeathSound_finished():
+	queue_free()

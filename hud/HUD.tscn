@@ -131,6 +131,39 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Ammo" type="Panel" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -274.306
+margin_top = 1.0
+margin_right = -168.306
+margin_bottom = 32.0
+custom_styles/panel = SubResource( 3 )
+script = ExtResource( 24 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="RichTextLabel" parent="Ammo"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -15.7972
+margin_top = -16.0607
+margin_right = 46.2028
+margin_bottom = 13.9393
+custom_fonts/normal_font = SubResource( 4 )
+text = "20"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AmmoSprite" type="Sprite" parent="Ammo"]
+position = Vector2( 17.1921, 11.987 )
+scale = Vector2( 0.592144, 0.592144 )
+texture = ExtResource( 27 )
+
 [node name="Acid" type="Panel" parent="."]
 anchor_left = 0.5
 anchor_right = 0.5
@@ -216,7 +249,6 @@ __meta__ = {
 position = Vector2( 18.7047, 13.9793 )
 scale = Vector2( 0.674971, 0.674971 )
 frames = SubResource( 5 )
-frame = 5
 playing = true
 
 [node name="HealthMeter" type="Panel" parent="."]
@@ -257,38 +289,5 @@ anims/pulse = SubResource( 7 )
 position = Vector2( 28.712, 27.9128 )
 scale = Vector2( 0.959882, 0.959882 )
 frames = SubResource( 8 )
-frame = 6
+frame = 11
 playing = true
-
-[node name="Ammo" type="Panel" parent="."]
-anchor_left = 0.5
-anchor_right = 0.5
-margin_left = -274.306
-margin_top = 1.0
-margin_right = -168.306
-margin_bottom = 32.0
-custom_styles/panel = SubResource( 3 )
-script = ExtResource( 24 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Label" type="RichTextLabel" parent="Ammo"]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -15.7972
-margin_top = -16.0607
-margin_right = 46.2028
-margin_bottom = 13.9393
-custom_fonts/normal_font = SubResource( 4 )
-text = "20"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="AmmoSprite" type="Sprite" parent="Ammo"]
-position = Vector2( 17.1921, 11.987 )
-scale = Vector2( 0.592144, 0.592144 )
-texture = ExtResource( 27 )

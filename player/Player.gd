@@ -6,14 +6,19 @@ export var gravity = 12
 var velocity = Vector3.ZERO
 var mouse_plane_pos: Vector3
 
+var dead = false
+
 onready var camera = get_viewport().get_camera()
 onready var max_interaction_dist = $Hitbox/CollisionShape.shape.radius
 
 func _ready():
-	Global.connect("player_damaged", self, "_on_Player_player_damaged")
-	Global.connect("fruit_ready", self, "_on_Player_fruit_ready")
+	Global.connect("fruit_ready", self, "_on_Global_fruit_ready")
+	Global.connect("player_died", self, "_on_Global_player_died")
 
 func _input(event):
+	if dead:
+		return
+	
 	if event is InputEventMouseMotion:
 		var origin = camera.project_ray_origin(event.position)
 		var normal = camera.project_ray_normal(event.position)
@@ -27,6 +32,9 @@ func global_mouse_dir() -> Vector3:
 	return dir.normalized()
 
 func _physics_process(delta):
+	if dead:
+		return
+	
 	var dir = global_input_dir()
 	
 	# Rotate towards mouse pointer
@@ -51,6 +59,9 @@ var time_since_last_fire: float = 0.0
 signal place_a_plant()
 
 func _process(delta):
+	if dead:
+		return
+	
 	time_since_last_fire += delta
 	
 	if Input.is_action_just_pressed("fire"):
@@ -99,7 +110,7 @@ func _on_Hitbox_body_entered(body):
 		
 		harvest(plant)
 
-func _on_Player_fruit_ready(plant):
+func _on_Global_fruit_ready(plant):
 	# Attempt to harvest
 	var dist = global_transform.origin.distance_to(plant.global_transform.origin)
 	
@@ -112,6 +123,10 @@ func _on_Player_fruit_ready(plant):
 func _on_Hitbox_body_exited(body):
 	pass # Replace with function body.
 
-func _on_Player_player_damaged(damage):
-	print("damaged!!!")
+
+func _on_Hurtbox_area_entered(area):
 	$DamageSound.play()
+	Global.damage_player(1)
+
+func _on_Global_player_died():
+	dead = true

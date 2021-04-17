@@ -1,13 +1,27 @@
 extends Node
 
+const BIT_OBJECT_AVOIDANCE = 0b10
+const BIT_ENEMY_LASER      = 0b100
+const BIT_PLAYER_LASER     = 0b1000
+const BIT_ENEMIES          = 0b10000
+const BIT_PLAYER           = 0b100000
+const BIT_PLANTS           = 0b1000000
+const BIT_BUILDINGS        = 0b10000000
+
 var rain_acidity_per_sec: float = 0.75
 var rain_ph: float = 2.0
 
 var tutorial: bool = false
 
-var health: float = 50
+var max_health: float = 10
+var health: float = max_health
 var gold: int = 10
 var ammo: int = 5
+var drones_killed: int = 0
+var plants_died: int = 0
+var plants_harvested: int = 0
+
+var player_dead: bool = false
 
 var plant_price = 5
 var fruit_price = 10
@@ -18,9 +32,15 @@ func reset():
 	
 	tutorial = false
 	
-	health = 50
+	max_health = 10
+	health = max_health
 	gold = 10
 	ammo = 5
+	drones_killed = 0
+	plants_died = 0
+	plants_harvested = 0
+	
+	player_dead = false
 	
 	plant_price = 5
 	fruit_price = 10
@@ -37,11 +57,16 @@ signal fruit_ready(plant)
 func emit_fruit_ready(plant):
 	emit_signal("fruit_ready", plant)
 
-signal player_damaged(damage)
+signal player_died()
 
 func damage_player(damage):
+	if player_dead:
+		return
+	
 	health = max(0, health - damage)
-	emit_signal("player_damaged", damage)
+	if health <= 0:
+		player_dead = true
+		emit_signal("player_died")
 
 func get_player():
 	var nodes = get_tree().get_nodes_in_group("player")

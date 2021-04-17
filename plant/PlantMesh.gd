@@ -121,6 +121,8 @@ func harvest() -> bool:
 	#reset()
 	$Fruit.visible = false
 	$DeathAnimation.play("death")
+	Global.plants_harvested += 1
+	
 	return true
 
 enum {POT, TRUNK, LEAVES, BULBS, FRUIT, HARVEST}
@@ -173,4 +175,5 @@ func _on_DeathAnimation_animation_finished(_anim_name):
 
 
 func _on_DeathTimer_timeout():
+	Global.plants_died += 1
 	$DeathAnimation.play("death")

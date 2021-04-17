@@ -22,6 +22,8 @@ func set_color(value):
 	sm.emission = color
 
 func _process(delta):
+	DebugDraw.reset($Debug)
+	
 	if dead:
 		return
 	
@@ -30,25 +32,59 @@ func _process(delta):
 		queue_free()
 		return
 	
+	var hit = scan_for_drone()
+	if hit != Vector3.ZERO:
+		look_at(hit, Vector3.UP)
+	
 	var dir = -global_transform.basis.z
 	var velocity = dir* speed
 	
 	global_translate(velocity * delta)
 
+func scan_for_drone():
+	var ray = -global_transform.basis.z
+	var rot_axis = global_transform.basis.x.normalized()
+	
+	var num_rays = 4
+	for i in range(num_rays):
+		if i == 0:
+			continue
+		var max_angle = PI/2
+		var phi = max_angle/num_rays * i
+		
+		var dir = ray.rotated(rot_axis, phi).normalized()
+		var from = global_transform.origin
+		var to = from + dir * 15
+		
+		#DebugDraw.global_sphere($Debug, from, Color.red, 0.5)
+		#DebugDraw.global_sphere($Debug, to, Color.blue, 0.5)
+		#DebugDraw.global_line($Debug, from, to)
+		
+		var space_state = get_world().direct_space_state
+		var result = space_state.intersect_ray(from, to, [], Global.BIT_ENEMIES, true, true)
+		if result.size() > 0:
+			
+			#DebugDraw.global_sphere($Debug, result.position, Color.blue, 0.5)
+			#DebugDraw.global_line($Debug, from, result.position, Color.red)
+			#return result.position
+			return result.collider.global_transform.origin
+	
+	return Vector3.ZERO
+
+func destroy():
+	$MeshInstance.hide()
+	$ExplosionParticles.emitting = true
+	$ExplosionTimer.start()
+	$ExplosionSound.play()
+	dead = true
+
 func _on_Laser_body_entered(body):
 	if body.is_in_group("plant"):
-		#var drone = body.get_parent()
-		#drone.health -= 1
-		#get_parent().remove_child(self)
-		#body.add_child(self)
-		$MeshInstance.hide()
-		$ExplosionParticles.emitting = true
-		$ExplosionTimer.start()
-		$ExplosionSound.play()
-		dead = true
-	else:
-		print(body.get_path())
-
+		destroy()
 
 func _on_ExplosionTimer_timeout():
 	queue_free()
+
+func _on_Laser_area_entered(area):
+	if area.is_in_group("drone"):
+		destroy()

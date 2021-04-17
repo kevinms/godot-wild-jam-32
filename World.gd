@@ -7,7 +7,8 @@ onready var player = $Player
 onready var cursor = preload("res://assets/cursor/cursor.png")
 
 func _ready():
-	Input.set_custom_mouse_cursor(cursor, Input.CURSOR_ARROW, Vector2(16,16))\
+	Input.set_custom_mouse_cursor(cursor, Input.CURSOR_ARROW, Vector2(16,16))
+	Global.connect("player_died", self, "_on_Global_player_died")
 	
 	$Music.stream = AudioLibrary.random(AudioLibrary.music)
 	$Music.play()
@@ -30,3 +31,11 @@ func _on_Player_place_a_plant():
 	var plant = plant_scene.instance()
 	plant.global_transform.origin = pos
 	add_child(plant)
+
+func game_over():
+	Input.set_custom_mouse_cursor(null, Input.CURSOR_ARROW)
+	$GameOverPanel.show()
+	$DeathAnimation.play("zoom")
+
+func _on_Global_player_died():
+	game_over()
