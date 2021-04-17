@@ -27,8 +27,9 @@ var plant_price = 5
 var fruit_price = 10
 
 func reset():
-	rain_acidity_per_sec = 0.75
-	rain_ph = 2.0
+	# Let the Rain node set these
+	#rain_acidity_per_sec = 0.75
+	#rain_ph = 2.0
 	
 	tutorial = false
 	
@@ -67,6 +68,13 @@ func damage_player(damage):
 	if health <= 0:
 		player_dead = true
 		emit_signal("player_died")
+
+signal rain_changed()
+
+func change_rain(ph, acidity_per_sec):
+	rain_ph = ph
+	rain_acidity_per_sec = acidity_per_sec
+	emit_signal("rain_changed")
 
 func get_player():
 	var nodes = get_tree().get_nodes_in_group("player")

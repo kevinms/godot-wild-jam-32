@@ -74,7 +74,7 @@ shape = SubResource( 7 )
 
 [node name="DamageSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 2 )
-volume_db = -16.0
+volume_db = -8.0
 
 [connection signal="body_entered" from="Hitbox" to="." method="_on_Hitbox_body_entered"]
 [connection signal="body_exited" from="Hitbox" to="." method="_on_Hitbox_body_exited"]

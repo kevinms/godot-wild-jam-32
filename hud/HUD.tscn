@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=2]
+[gd_scene load_steps=46 format=2]
 
 [ext_resource path="res://hud/AcidMeter.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/font/rainyhearts.ttf" type="DynamicFontData" id=2]
@@ -27,6 +27,10 @@
 [ext_resource path="res://hud/HealthMeter.gd" type="Script" id=25]
 [ext_resource path="res://hud/Gold.gd" type="Script" id=26]
 [ext_resource path="res://assets/ammo/ammo.png" type="Texture" id=27]
+[ext_resource path="res://hud/Rainbow.gd" type="Script" id=28]
+[ext_resource path="res://assets/acidmeter/acid-meter.png" type="Texture" id=29]
+[ext_resource path="res://assets/acidmeter/particle.png" type="Texture" id=30]
+[ext_resource path="res://assets/sfx/hud/terminal_04.ogg" type="AudioStream" id=31]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.0588235, 0.0980392, 0.160784, 0.588235 )
@@ -52,6 +56,33 @@ corner_radius_bottom_left = 8
 [sub_resource type="DynamicFont" id=4]
 size = 30
 font_data = ExtResource( 2 )
+
+[sub_resource type="Gradient" id=9]
+offsets = PoolRealArray( 0, 0.167883, 0.335766, 0.50365, 0.678832, 0.839416, 1 )
+colors = PoolColorArray( 0.901961, 0.0627451, 0.0627451, 1, 0.901961, 0.323361, 0.0627451, 1, 0.901961, 0.894118, 0.0627451, 1, 0.223529, 0.901961, 0.0627451, 1, 0.0627451, 0.901961, 0.886275, 1, 0.0627451, 0.109804, 0.901961, 1, 0.545098, 0.0627451, 0.901961, 1 )
+
+[sub_resource type="GradientTexture" id=10]
+gradient = SubResource( 9 )
+
+[sub_resource type="StyleBoxTexture" id=11]
+texture = SubResource( 10 )
+region_rect = Rect2( 0, 0, 2048, 1 )
+modulate_color = Color( 1, 1, 1, 0.560784 )
+
+[sub_resource type="Curve" id=13]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=14]
+curve = SubResource( 13 )
+
+[sub_resource type="ParticlesMaterial" id=12]
+flag_disable_z = true
+direction = Vector3( 0, 1, 0 )
+gravity = Vector3( 0, 98, 0 )
+initial_velocity = 34.88
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale_curve = SubResource( 14 )
 
 [sub_resource type="SpriteFrames" id=5]
 animations = [ {
@@ -94,7 +125,7 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[node name="Control" type="Control"]
+[node name="HUD" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
@@ -168,42 +199,63 @@ texture = ExtResource( 27 )
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -101.0
-margin_right = 101.0
-margin_bottom = 22.0
+margin_right = 100.0
+margin_bottom = 40.0
 custom_styles/panel = SubResource( 3 )
 script = ExtResource( 23 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Description" type="RichTextLabel" parent="Acid"]
+[node name="Label" type="RichTextLabel" parent="Acid"]
 anchor_left = 0.5
-anchor_top = 0.5
+anchor_top = 0.679
 anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -65.0
-margin_top = -10.0
-margin_right = 65.0
-margin_bottom = 10.0
+anchor_bottom = 0.679
+margin_left = -72.0428
+margin_top = -11.0329
+margin_right = 5.95718
+margin_bottom = 8.96711
+grow_horizontal = 2
+size_flags_horizontal = 3
 custom_fonts/normal_font = SubResource( 2 )
-text = "Acid Rain Meter"
+text = "Acid Rain"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Value" type="Panel" parent="Acid"]
+[node name="Value" type="RichTextLabel" parent="Acid"]
 anchor_left = 0.5
+anchor_top = 0.679
 anchor_right = 0.5
+anchor_bottom = 0.679
+margin_left = 25.492
+margin_top = -9.86791
+margin_right = 65.492
+margin_bottom = 10.1321
+grow_horizontal = 2
+size_flags_horizontal = 3
+custom_fonts/normal_font = SubResource( 2 )
+text = "pH 5"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="THing" type="Panel" parent="Acid"]
+visible = false
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
 margin_left = -53.0
-margin_top = 22.0
 margin_right = 53.0
-margin_bottom = 53.0
+margin_bottom = 31.0
 custom_styles/panel = SubResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="RichTextLabel" parent="Acid/Value"]
+[node name="Label" type="RichTextLabel" parent="Acid/THing"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -217,6 +269,50 @@ text = "pH 5"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Rainbow" type="Panel" parent="Acid"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -97.5
+margin_right = 97.5
+margin_bottom = 17.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+custom_styles/panel = SubResource( 11 )
+script = ExtResource( 28 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Z" type="Node2D" parent="Acid/Rainbow"]
+z_index = 1
+
+[node name="Needle" type="TextureRect" parent="Acid/Rainbow/Z"]
+margin_left = 71.3059
+margin_top = -8.33372
+margin_right = 96.3059
+margin_bottom = 16.6663
+texture = ExtResource( 29 )
+expand = true
+stretch_mode = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Particles" type="Particles2D" parent="Acid/Rainbow/Z/Needle"]
+position = Vector2( 11.9692, 18.4263 )
+z_as_relative = false
+amount = 40
+local_coords = false
+process_material = SubResource( 12 )
+texture = ExtResource( 30 )
+
+[node name="Tween" type="Tween" parent="Acid/Rainbow"]
+
+[node name="ChangeSound" type="AudioStreamPlayer" parent="Acid/Rainbow"]
+stream = ExtResource( 31 )
+volume_db = -8.0
 
 [node name="Gold" type="Panel" parent="."]
 anchor_left = 0.5
@@ -289,5 +385,7 @@ anims/pulse = SubResource( 7 )
 position = Vector2( 28.712, 27.9128 )
 scale = Vector2( 0.959882, 0.959882 )
 frames = SubResource( 8 )
-frame = 11
+frame = 4
 playing = true
+
+[connection signal="tween_all_completed" from="Acid/Rainbow/Tween" to="Acid/Rainbow" method="_on_Tween_tween_all_completed"]

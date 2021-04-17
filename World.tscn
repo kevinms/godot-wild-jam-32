@@ -363,7 +363,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.0494, -0.758, 0 )
 transform = Transform( -0.808925, 0, 0.587912, 0, 1, 0, -0.587912, 0, -0.808925, 13.5235, 3.21419, -16.1172 )
 
 [node name="DroneSpawner" type="Position3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 33.5614, -9.79803 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 36.5034, 0 )
 script = ExtResource( 19 )
 
 [node name="DropPlane" type="MeshInstance" parent="DroneSpawner"]

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/terminal_04.ogg-4b84aa6de0d265794e1ea1a616b57b5d.oggstr"
+
+[deps]
+
+source_file="res://assets/sfx/hud/terminal_04.ogg"
+dest_files=[ "res://.import/terminal_04.ogg-4b84aa6de0d265794e1ea1a616b57b5d.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

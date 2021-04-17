@@ -65,7 +65,7 @@ func rain_level(new_level, force = false):
 	if level == LEVEL.NONE:
 		emitting = false
 		$RainSound.stop()
-		Global.rain_acidity_per_sec = 0.0
+		Global.change_rain(7.0, 0.0)
 		return
 	
 	var stream
@@ -73,11 +73,11 @@ func rain_level(new_level, force = false):
 		LEVEL.LIGHT:
 			amount = 512
 			$RainSound.stream = rain_sounds[0]
-			Global.rain_acidity_per_sec = 0.6
+			Global.change_rain(4.0, 0.6)
 		LEVEL.HEAVY:
 			amount = 2048
 			$RainSound.stream = rain_sounds[1]
-			Global.rain_acidity_per_sec = 1.2
+			Global.change_rain(1.0, 1.2)
 	
 	emitting = true
 	$RainSound.play()
