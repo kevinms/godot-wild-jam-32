@@ -15,6 +15,7 @@ const max_hue = 256.0 / 360.0
 export var pH: float = 7.0
 export var buffer_capacity: float = 1.0
 export var random: bool = true
+export var danger_ph: float = 0.15
 
 #const upgrade_time = 0.5
 export var upgrade_time: float = 2.0
@@ -56,27 +57,34 @@ func reset():
 	
 	$StageTimer.start(stage_time)
 
-func feed(new_ph: float):
-	if stage == HARVEST:
+func set_ph(new_ph: float):
+	if stage >= FRUIT:
 		return
+	
+	var already_zero = pH == 0
+	
 	pH = clamp(new_ph, 0, 14)
+	
+	if pH == 0 and !already_zero:
+		$DeathTimer.start()
+		$DangerAnimation.play("danger")
+		tween.stop_all()
+		$StageTimer.stop()
+	elif pH != 0 and already_zero:
+		$DeathTimer.stop()
+		$DangerAnimation.stop(true)
+		tween.resume_all()
+		$StageTimer.start()
 
 func acidification(delta):
 	if stage == HARVEST:
 		return
 	
-	var already_zero = pH == 0
-	
 	# Acidification
 	var acid = Global.rain_acidity_per_sec * delta
-	var new = pH - (buffer_capacity * acid)
+	var new_ph = pH - (buffer_capacity * acid)
 	
-	pH = clamp(new, 0, 14)
-	
-	if pH == 0 and !already_zero:
-		$DeathTimer.start()
-	elif pH != 0:
-		$DeathTimer.stop()
+	set_ph(new_ph)
 
 func _process(delta):
 	acidification(delta)
@@ -103,7 +111,7 @@ func update_color():
 	
 	var color = Color.from_hsv(h, s, v, a)
 	
-	if h < 0.2:
+	if h < danger_ph:
 		acid_cube_pulse.play("pulse")
 	else:
 		acid_cube_pulse.stop(true)

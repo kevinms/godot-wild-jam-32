@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=2]
+[gd_scene load_steps=47 format=2]
 
 [ext_resource path="res://assets/sfx/plant/retro_coin_02.ogg" type="AudioStream" id=1]
 [ext_resource path="res://plant/PlantMesh.gd" type="Script" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://assets/plant/Bark.material" type="Material" id=11]
 [ext_resource path="res://assets/plant/FruitRough.material" type="Material" id=12]
 [ext_resource path="res://assets/font/rainyhearts.ttf" type="DynamicFontData" id=13]
+[ext_resource path="res://assets/sfx/plant/beep_02.ogg" type="AudioStream" id=14]
 
 [sub_resource type="BoxShape" id=1]
 
@@ -289,6 +290,54 @@ curve = SubResource( 21 )
 gravity = Vector3( 0, 100, 0 )
 scale_curve = SubResource( 22 )
 
+[sub_resource type="SpatialMaterial" id=28]
+params_cull_mode = 2
+emission_enabled = true
+emission = Color( 0.901961, 0.109559, 0.0705882, 1 )
+emission_energy = 1.0
+emission_operator = 0
+emission_on_uv2 = false
+
+[sub_resource type="Curve" id=29]
+max_value = 2.0
+_data = [ Vector2( 0, 0.563636 ), 0.0, 0.0, 0, 0, Vector2( 1, 1.42727 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=30]
+curve = SubResource( 29 )
+
+[sub_resource type="ParticlesMaterial" id=31]
+gravity = Vector3( 0, 0, 0 )
+scale_curve = SubResource( 30 )
+
+[sub_resource type="Animation" id=32]
+resource_name = "danger"
+length = 1.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("DangerParticles:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("DangerSound:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
 [sub_resource type="Animation" id=24]
 resource_name = "death"
 length = 0.5
@@ -339,7 +388,7 @@ tracks/0/keys = {
 [node name="PlantMesh" type="StaticBody" groups=[
 "plant",
 ]]
-collision_layer = 65
+collision_layer = 67
 script = ExtResource( 2 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
@@ -430,6 +479,22 @@ one_shot = true
 process_material = SubResource( 23 )
 draw_pass_1 = ExtResource( 6 )
 
+[node name="DangerParticles" type="Particles" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.467514, 0 )
+material_override = SubResource( 28 )
+emitting = false
+amount = 2
+lifetime = 0.5
+one_shot = true
+process_material = SubResource( 31 )
+draw_pass_1 = ExtResource( 6 )
+
+[node name="DangerSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 14 )
+
+[node name="DangerAnimation" type="AnimationPlayer" parent="."]
+anims/danger = SubResource( 32 )
+
 [node name="UpgradeSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 7 )
 volume_db = 3.0
@@ -474,7 +539,7 @@ autoplay = "pulse"
 anims/pulse = SubResource( 27 )
 
 [node name="DeathTimer" type="Timer" parent="."]
-wait_time = 2.0
+wait_time = 4.0
 one_shot = true
 
 [connection signal="tween_all_completed" from="Tween" to="." method="_on_Tween_tween_all_completed"]

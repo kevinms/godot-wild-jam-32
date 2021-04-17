@@ -339,6 +339,7 @@ script = ExtResource( 5 )
 [node name="RainSound" type="AudioStreamPlayer" parent="Rain"]
 pause_mode = 2
 stream = ExtResource( 14 )
+volume_db = 4.0
 bus = "Rain"
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
