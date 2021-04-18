@@ -10,7 +10,7 @@ var max_drones: int = 15
 var next_spawn: float = 5.0
 var base_drones: int = 2
 
-var next_wave: float = 20.0
+var next_wave: float = 0.0
 var wave_drones_left: int = 0
 
 func drones_per_wave() -> int:
