@@ -3,6 +3,7 @@ extends Position3D
 onready var drop_half_width = $DropPlane.mesh.size.x / 2
 onready var ammo_scene = preload("res://pickups/Ammo.tscn")
 onready var heart_scene = preload("res://pickups/Heart.tscn")
+onready var coin_scene = preload("res://pickups/Coin.tscn")
 
 func _ready():
 	randomize()
@@ -13,6 +14,7 @@ func _process(delta):
 	
 	ammo_drop(delta)
 	heart_drop(delta)
+	coin_drop(delta)
 
 var next_ammo: float = 5.0
 const max_ammo: int = 2
@@ -47,6 +49,26 @@ func heart_drop(delta):
 	var heart = heart_scene.instance()
 	add_child(heart)
 	heart.global_transform.origin = pos
+
+var next_coin: float = 30.0
+const max_coin: int = 1
+
+func coin_drop(delta):
+	next_coin -= delta
+	if next_coin > 0:
+		if Global.gold <= 0 and next_coin >= 15.0:
+			next_coin = 15.0
+		
+		return
+	next_coin = rand_range(45, 75.0)
+	
+	if get_tree().get_nodes_in_group("coin").size() >= max_coin:
+		return
+	
+	var pos = find_drop_location()
+	var coin = coin_scene.instance()
+	add_child(coin)
+	coin.global_transform.origin = pos
 
 func find_drop_location() -> Vector3:
 	for i in range(4):

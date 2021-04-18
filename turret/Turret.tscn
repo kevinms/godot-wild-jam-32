@@ -9,7 +9,7 @@
 radius = 0.897092
 height = 2.11383
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=14]
 size = 24
 font_data = ExtResource( 4 )
 
@@ -47,7 +47,7 @@ gui_disable_input = true
 [node name="Label" type="Label" parent="Viewport"]
 margin_right = 50.0
 margin_bottom = 25.0
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 14 )
 text = "60"
 align = 1
 valign = 1

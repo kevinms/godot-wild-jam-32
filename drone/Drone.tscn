@@ -8,10 +8,10 @@
 [ext_resource path="res://assets/drone/smoke.png" type="Texture" id=6]
 [ext_resource path="res://assets/drone/flame.png" type="Texture" id=7]
 
-[sub_resource type="SphereShape" id=1]
+[sub_resource type="SphereShape" id=15]
 radius = 0.338162
 
-[sub_resource type="SphereMesh" id=2]
+[sub_resource type="SphereMesh" id=16]
 radius = 0.5
 height = 1.0
 
@@ -59,14 +59,14 @@ size = Vector2( 2, 2 )
 max_value = 100.0
 _data = [ Vector2( 0, 53.2955 ), 0.0, 0.0, 0, 0, Vector2( 0.625, 0 ), 0.0, 0.0, 0, 0 ]
 
-[sub_resource type="CurveTexture" id=15]
+[sub_resource type="CurveTexture" id=21]
 curve = SubResource( 14 )
 
-[sub_resource type="Curve" id=16]
+[sub_resource type="Curve" id=22]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), -0.0499997, 0.0, 0, 0 ]
 
 [sub_resource type="CurveTexture" id=17]
-curve = SubResource( 16 )
+curve = SubResource( 22 )
 
 [sub_resource type="ParticlesMaterial" id=18]
 lifetime_randomness = 0.57
@@ -76,7 +76,7 @@ direction = Vector3( 0, 1, 0 )
 gravity = Vector3( 0, -100, 0 )
 initial_velocity = 20.0
 damping = 53.49
-damping_curve = SubResource( 15 )
+damping_curve = SubResource( 21 )
 scale_curve = SubResource( 17 )
 
 [sub_resource type="SpatialMaterial" id=19]
@@ -124,7 +124,7 @@ collision_mask = 3
 
 [node name="CollisionShape" type="CollisionShape" parent="Pin"]
 transform = Transform( 1.97395, 0, 0, 0, 1.97395, 0, 0, 0, 1.97395, 0, 0, 0 )
-shape = SubResource( 1 )
+shape = SubResource( 15 )
 
 [node name="ConeTwistJoint" type="ConeTwistJoint" parent="Pin"]
 nodes/node_a = NodePath("..")
@@ -134,7 +134,7 @@ softness = 0.2
 
 [node name="DebugPin" type="MeshInstance" parent="Pin"]
 visible = false
-mesh = SubResource( 2 )
+mesh = SubResource( 16 )
 material/0 = null
 
 [node name="Drone" type="RigidBody" parent="."]

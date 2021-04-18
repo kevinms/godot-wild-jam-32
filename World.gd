@@ -101,9 +101,9 @@ func tutorial(delta):
 		2:
 			$Tip/Label.text = "Run to me [WASD] and keep me alive by feeding a pH up solution [Space]."
 		3:
-			$Tip/Label.text = "Eventually I will produce a fruit."
+			$Tip/Label.text = "pH up costs " + str(Global.feed_price) + " gold. Keep an eye on how much you have!"
 		4:
-			$Tip/Label.text = "Harvest my fruit by standing close by for " + str(Global.fruit_price) + " gold."
+			$Tip/Label.text = "Eventually I will produce a fruit. Harvest my fruit by standing close by for " + str(Global.fruit_price) + " gold."
 		5:
 			$Tip/Label.text = "Press [E] to buy and plant a new seed for " + str(Global.plant_price) + " gold."
 		6:

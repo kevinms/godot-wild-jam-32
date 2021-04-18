@@ -350,7 +350,7 @@ __meta__ = {
 position = Vector2( 18.7047, 13.9793 )
 scale = Vector2( 0.674971, 0.674971 )
 frames = SubResource( 5 )
-frame = 4
+frame = 5
 playing = true
 
 [node name="Market" type="Panel" parent="."]
@@ -377,9 +377,9 @@ __meta__ = {
 }
 
 [node name="PlantPrice" type="Label" parent="Market"]
-margin_left = 104.58
+margin_left = 103.99
 margin_top = -0.00944138
-margin_right = 137.58
+margin_right = 136.99
 margin_bottom = 14.9906
 custom_fonts/font = SubResource( 15 )
 text = "22"
@@ -388,9 +388,9 @@ __meta__ = {
 }
 
 [node name="TextureRect" type="TextureRect" parent="Market"]
-margin_left = 126.47
+margin_left = 126.706
 margin_top = -2.18268
-margin_right = 190.47
+margin_right = 190.706
 margin_bottom = 61.8173
 rect_scale = Vector2( 0.3, 0.3 )
 size_flags_horizontal = 0
@@ -412,6 +412,9 @@ margin_right = 137.478
 margin_bottom = 29.7519
 custom_fonts/font = SubResource( 15 )
 text = "22"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="TextureRect2" type="TextureRect" parent="Market"]
 margin_left = 126.668
@@ -433,6 +436,9 @@ margin_right = 70.5461
 margin_bottom = 46.4907
 custom_fonts/font = SubResource( 15 )
 text = "[Space] pH UP"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="FeedPrice" type="Label" parent="Market"]
 margin_left = 104.478
@@ -493,7 +499,7 @@ anims/pulse = SubResource( 7 )
 position = Vector2( 28.712, 27.9128 )
 scale = Vector2( 0.959882, 0.959882 )
 frames = SubResource( 8 )
-frame = 8
+frame = 11
 playing = true
 
 [connection signal="tween_all_completed" from="Acid/Rainbow/Tween" to="Acid/Rainbow" method="_on_Tween_tween_all_completed"]

@@ -19,7 +19,7 @@ emission_operator = 0
 emission_on_uv2 = false
 
 [sub_resource type="BoxShape" id=7]
-extents = Vector3( 1.17294, 1.23555, 0.9 )
+extents = Vector3( 0.869331, 1.23555, 0.769289 )
 
 [sub_resource type="Curve" id=8]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), -2.99034, 0.0, 0, 0 ]
