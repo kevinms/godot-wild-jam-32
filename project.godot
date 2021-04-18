@@ -10,7 +10,7 @@ config_version=4
 
 [application]
 
-config/name="Cyberfarm"
+config/name="pH Neutral"
 run/main_scene="res://ui/MainMenu.tscn"
 config/icon="res://icon.png"
 
