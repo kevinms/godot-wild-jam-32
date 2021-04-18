@@ -11,5 +11,5 @@ dest_files=[ "res://.import/Punch Deck - Fallen.ogg-98b664b427398e5e2bd4c7fa224c
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0

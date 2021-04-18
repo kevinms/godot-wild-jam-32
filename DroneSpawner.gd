@@ -4,7 +4,7 @@ onready var drop_half_width = $DropPlane.mesh.size.x / 2
 onready var drone_scene = preload("res://drone/Drone.tscn")
 
 # Old
-var max_drones: int = 15
+var max_drones: int = 20
 
 
 var next_spawn: float = 5.0
@@ -16,7 +16,7 @@ var wave_drones_left: int = 0
 func drones_per_wave() -> int:
 	var n = base_drones + Global.plants_harvested / 4
 	
-	return n if n < 15 else 15
+	return n if n < max_drones else max_drones
 
 func _ready():
 	randomize()
