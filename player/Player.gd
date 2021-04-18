@@ -4,7 +4,7 @@ export var speed = 14
 export var gravity = 12
 
 var velocity = Vector3.ZERO
-var mouse_plane_pos: Vector3
+var mouse_screen_pos: Vector2
 
 var dead = false
 
@@ -15,27 +15,47 @@ func _ready():
 	Global.connect("fruit_ready", self, "_on_Global_fruit_ready")
 	Global.connect("player_died", self, "_on_Global_player_died")
 
+
+
 func _input(event):
 	if dead:
 		return
 	
 	if event is InputEventMouseMotion:
-		var origin = camera.project_ray_origin(event.position)
-		var normal = camera.project_ray_normal(event.position)
-		
-		var mouse_plane = Plane(Vector3.UP, 0)
-		mouse_plane_pos = mouse_plane.intersects_ray(origin, normal)
+		mouse_screen_pos = event.position
 
 func global_mouse_dir() -> Vector3:
+	var origin = camera.project_ray_origin(mouse_screen_pos)
+	var normal = camera.project_ray_normal(mouse_screen_pos)
+	
+	var mouse_plane = Plane(Vector3.UP, 0)
+	var mouse_plane_pos = mouse_plane.intersects_ray(origin, normal)
+	
 	var dir = mouse_plane_pos - global_transform.origin
 	dir.y = global_transform.origin.y
 	return dir.normalized()
+
+func adjust_visuals(input_dir: Vector3):
+	# Lean towards direction of movement
+	var axis = input_dir.cross(Vector3.UP)
+	var angle = PI/4
+	var up = Vector3.ZERO.rotated(axis, angle)
+	var target = up.cross(axis)
+	$Feet.look_at(target, up)
+	
+	# Wave bumbershoot around
+	if input_dir != Vector3.ZERO:
+		$AnimationPlayer.play("wave")
+	else:
+		$AnimationPlayer.stop()
 
 func _physics_process(delta):
 	if dead:
 		return
 	
 	var dir = global_input_dir()
+	
+	adjust_visuals(dir)
 	
 	# Rotate towards mouse pointer
 	var mouse_dir = global_mouse_dir()

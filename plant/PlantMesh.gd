@@ -86,6 +86,9 @@ func acidification(delta):
 	if stage == HARVEST:
 		return
 	
+	if Global.tutorial and Global.tutorial_no_acidification:
+		return
+	
 	# Acidification
 	var acid = Global.rain_acidity_per_sec * delta
 	var new_ph = pH - (buffer_capacity * acid)
@@ -100,11 +103,11 @@ func _process(delta):
 	#acid_cube.rotate_y(PI/2*delta)
 	#acid_cube.rotate_x(PI/4*delta)
 	
-	if Global.tutorial:
-		var pos = camera.unproject_position(global_transform.origin + Vector3.UP * 6 + Vector3.RIGHT * 2 + Vector3.FORWARD * 4)
-		$Panel.set_global_position(pos)
-	else:
-		$Panel.visible = false
+	#if Global.tutorial:
+	#	var pos = camera.unproject_position(global_transform.origin + Vector3.UP * 6 + Vector3.RIGHT * 2 + Vector3.FORWARD * 4)
+	#	$Panel.set_global_position(pos)
+	#else:
+	#	$Panel.visible = false
 
 func update_color():
 	if stage >= FRUIT:
@@ -148,6 +151,9 @@ func upgrade_effect():
 		$UpgradeSound.play()
 
 func _on_StageTimer_timeout():
+	process_stage()
+
+func process_stage():
 	match stage:
 		POT:
 			stage = TRUNK
@@ -155,6 +161,8 @@ func _on_StageTimer_timeout():
 			tween.interpolate_property(trunk, "scale", Vector3.ZERO, Vector3.ONE, upgrade_time, Tween.TRANS_BOUNCE, Tween.EASE_OUT, upgrade_delay)
 			tween.start()
 		TRUNK:
+			if Global.tutorial and Global.tutorial_no_acidification:
+				return
 			stage = LEAVES
 			upgrade_effect()
 			tween.interpolate_property(leaves, "scale", Vector3.ZERO, Vector3.ONE, upgrade_time, Tween.TRANS_LINEAR, Tween.EASE_OUT, upgrade_delay)
@@ -184,9 +192,11 @@ func _on_Tween_tween_all_completed():
 	else:
 		$StageTimer.start(stage_time)
 
+signal plant_died()
+
 func _on_DeathAnimation_animation_finished(_anim_name):
 	queue_free()
-
+	emit_signal("plant_died")
 
 func _on_DeathTimer_timeout():
 	Global.plants_died += 1

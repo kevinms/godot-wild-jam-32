@@ -142,6 +142,7 @@ margin_right = 10.0908
 margin_bottom = 92.4986
 
 [node name="Panel2" type="Panel" parent="."]
+visible = false
 margin_left = 822.658
 margin_top = 43.4307
 margin_right = 1024.66
@@ -345,7 +346,7 @@ __meta__ = {
 position = Vector2( 18.7047, 13.9793 )
 scale = Vector2( 0.674971, 0.674971 )
 frames = SubResource( 5 )
-frame = 2
+frame = 4
 playing = true
 
 [node name="HealthMeter" type="Panel" parent="."]
@@ -386,7 +387,7 @@ anims/pulse = SubResource( 7 )
 position = Vector2( 28.712, 27.9128 )
 scale = Vector2( 0.959882, 0.959882 )
 frames = SubResource( 8 )
-frame = 9
+frame = 5
 playing = true
 
 [connection signal="tween_all_completed" from="Acid/Rainbow/Tween" to="Acid/Rainbow" method="_on_Tween_tween_all_completed"]

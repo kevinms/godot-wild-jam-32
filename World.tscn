@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=39 format=2]
 
 [ext_resource path="res://Camera.gd" type="Script" id=1]
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=2]
@@ -9,7 +9,6 @@
 [ext_resource path="res://plant/PlantMesh.tscn" type="PackedScene" id=7]
 [ext_resource path="res://World.gd" type="Script" id=8]
 [ext_resource path="res://hud/HUD.tscn" type="PackedScene" id=9]
-[ext_resource path="res://drone/Drone.tscn" type="PackedScene" id=10]
 [ext_resource path="res://pickups/Ammo.tscn" type="PackedScene" id=11]
 [ext_resource path="res://plant/StaticPlant.tscn" type="PackedScene" id=12]
 [ext_resource path="res://ItemDrop.gd" type="Script" id=13]
@@ -19,6 +18,62 @@
 [ext_resource path="res://ui/ui-box-style.tres" type="StyleBox" id=17]
 [ext_resource path="res://ui/PopupMenu.tscn" type="PackedScene" id=18]
 [ext_resource path="res://DroneSpawner.gd" type="Script" id=19]
+
+[sub_resource type="StyleBoxFlat" id=25]
+bg_color = Color( 0.0431373, 0.00392157, 0.0784314, 1 )
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="DynamicFont" id=28]
+font_data = ExtResource( 15 )
+
+[sub_resource type="Animation" id=27]
+resource_name = "pulse"
+length = 0.8
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.01, 1.01 ), Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="StyleBoxFlat" id=30]
+bg_color = Color( 0.0431373, 0.00392157, 0.0784314, 1 )
+border_width_left = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="Animation" id=29]
+resource_name = "pulse"
+length = 0.8
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1.01, 1.01 ), Vector2( 1, 1 ) ]
+}
 
 [sub_resource type="DynamicFont" id=1]
 size = 48
@@ -108,6 +163,68 @@ albedo_color = Color( 0.027451, 0.905882, 0.266667, 1 )
 script = ExtResource( 8 )
 
 [node name="HUD" parent="." instance=ExtResource( 9 )]
+
+[node name="Tip" type="Panel" parent="."]
+margin_left = 135.569
+margin_top = 168.246
+margin_right = 347.569
+margin_bottom = 279.246
+rect_pivot_offset = Vector2( 63.5019, 13.3448 )
+custom_styles/panel = SubResource( 25 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Tip"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 4.0
+margin_right = -4.0
+margin_bottom = -4.0
+size_flags_vertical = 5
+custom_fonts/font = SubResource( 28 )
+text = "[Space] to harvest testing yeah sir"
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Tip"]
+anims/pulse = SubResource( 27 )
+
+[node name="Continue" type="Panel" parent="Tip"]
+margin_left = 29.9132
+margin_top = 112.281
+margin_right = 181.913
+margin_bottom = 131.281
+rect_pivot_offset = Vector2( 63.5019, 13.3448 )
+custom_styles/panel = SubResource( 30 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Tip/Continue"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 0.35202
+margin_right = -4.0
+margin_bottom = -3.64798
+size_flags_vertical = 5
+custom_fonts/font = SubResource( 28 )
+text = "[Enter] to continue."
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Tip/Continue"]
+anims/pulse = SubResource( 29 )
 
 [node name="GameOverPanel" type="Panel" parent="."]
 pause_mode = 2
@@ -357,11 +474,8 @@ visible = false
 light_energy = 0.5
 shadow_enabled = true
 
-[node name="PlantMesh" parent="." instance=ExtResource( 7 )]
+[node name="PlantTut" parent="." instance=ExtResource( 7 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -10.0494, -0.758, 0 )
-
-[node name="Drone" parent="." instance=ExtResource( 10 )]
-transform = Transform( -0.808925, 0, 0.587912, 0, 1, 0, -0.587912, 0, -0.808925, 13.5235, 3.21419, -16.1172 )
 
 [node name="DroneSpawner" type="Position3D" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 36.5034, 0 )

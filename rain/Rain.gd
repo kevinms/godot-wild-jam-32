@@ -26,7 +26,6 @@ func _ready():
 		s.hide()
 
 func _process(delta):
-	change_weather(delta)
 	
 	if level != LEVEL.NONE:
 		time_since_splash += delta
@@ -35,6 +34,11 @@ func _process(delta):
 			cur_splash_ind += 1
 			cur_splash_ind %= splashes.size()
 			time_since_splash -= splash_rate
+	
+	if Global.tutorial:
+		return
+	
+	change_weather(delta)
 
 func make_splash():
 	var x_pos = rand_range(-splash_area, splash_area)

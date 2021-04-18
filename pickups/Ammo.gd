@@ -5,6 +5,8 @@ func _on_Ammo_body_entered(body):
 		var amount = 10
 		Global.ammo += amount
 		
+		Global.ammo_picked_up += 1
+		
 		var doot_pos = global_transform.origin + Vector3.UP * 3 + Vector3.FORWARD * 4
 		var duration = 0.5
 		Global.new_doot("+" + str(amount) + " Ammo", doot_pos, 0.6, duration, Global.DOOT_NONE, false)

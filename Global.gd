@@ -11,7 +11,12 @@ const BIT_BUILDINGS        = 0b10000000
 var rain_acidity_per_sec: float = 0.75
 var rain_ph: float = 2.0
 
+# Don't reset this value
+var tutorial_skip: bool = false
+
 var tutorial: bool = false
+var tutorial_no_acidification: bool = true
+var tutorial_step: int = -1
 
 var max_health: float = 10
 var health: float = max_health
@@ -20,6 +25,8 @@ var ammo: int = 5
 var drones_killed: int = 0
 var plants_died: int = 0
 var plants_harvested: int = 0
+var plants_planted: int = 0
+var ammo_picked_up: int = 0
 
 var player_dead: bool = false
 
@@ -33,19 +40,24 @@ func reset():
 	#rain_ph = 2.0
 	
 	tutorial = false
+	tutorial_no_acidification = true
+	tutorial_step = -1
 	
 	max_health = 10
 	health = max_health
-	gold = 10
+	gold = 5
 	ammo = 5
 	drones_killed = 0
 	plants_died = 0
 	plants_harvested = 0
+	plants_planted = 0
+	ammo_picked_up = 0
 	
 	player_dead = false
 	
 	plant_price = 5
 	fruit_price = 10
+	feed_price = 1
 
 func buy_plant():
 	if gold < plant_price:

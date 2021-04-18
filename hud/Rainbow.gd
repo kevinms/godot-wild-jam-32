@@ -19,6 +19,7 @@ var prev_ph: float
 func _on_Global_rain_changed():
 	# Tween between positions
 	$Tween.stop_all()
+	$Tween.remove_all()
 	
 	if !$ChangeSound.playing:
 		$ChangeSound.play()

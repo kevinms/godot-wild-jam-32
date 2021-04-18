@@ -10,6 +10,9 @@ func _ready():
 	randomize()
 
 func _process(delta):
+	if Global.tutorial:
+		return
+	
 	drone_drop(delta)
 
 func drone_drop(delta):

@@ -7,6 +7,9 @@ func _ready():
 	randomize()
 
 func _process(delta):
+	if Global.tutorial and Global.tutorial_step < 7:
+		return
+	
 	ammo_drop(delta)
 
 var next_ammo: float = 5.0

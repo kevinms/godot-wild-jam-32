@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://assets/font/rainyhearts.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Camera.gd" type="Script" id=2]
@@ -13,32 +13,33 @@
 [ext_resource path="res://assets/sfx/rain/2-82367-A.ogg" type="AudioStream" id=11]
 [ext_resource path="res://ui/CreditsPanel.gd" type="Script" id=12]
 [ext_resource path="res://drone/Drone.tscn" type="PackedScene" id=13]
+[ext_resource path="res://assets/umbrella/umbrella.glb" type="PackedScene" id=15]
 
-[sub_resource type="DynamicFont" id=12]
+[sub_resource type="DynamicFont" id=5]
 size = 48
 font_data = ExtResource( 1 )
 
-[sub_resource type="DynamicFont" id=13]
+[sub_resource type="DynamicFont" id=6]
 size = 32
 font_data = ExtResource( 1 )
 
-[sub_resource type="DynamicFontData" id=10]
+[sub_resource type="DynamicFontData" id=7]
 antialiased = false
 font_path = "res://assets/font/rainyhearts.ttf"
 
-[sub_resource type="DynamicFont" id=11]
+[sub_resource type="DynamicFont" id=8]
 size = 22
-font_data = SubResource( 10 )
+font_data = SubResource( 7 )
 
-[sub_resource type="DynamicFontData" id=8]
+[sub_resource type="DynamicFontData" id=9]
 antialiased = false
 font_path = "res://assets/font/rainyhearts.ttf"
 
-[sub_resource type="DynamicFont" id=9]
+[sub_resource type="DynamicFont" id=10]
 size = 20
-font_data = SubResource( 8 )
+font_data = SubResource( 9 )
 
-[sub_resource type="ParticlesMaterial" id=1]
+[sub_resource type="ParticlesMaterial" id=11]
 emission_shape = 2
 emission_box_extents = Vector3( 50, 50, 10 )
 direction = Vector3( 0, 0, -1 )
@@ -46,21 +47,32 @@ spread = 0.0
 gravity = Vector3( 0, 0, 0 )
 initial_velocity = 70.0
 
-[sub_resource type="SpatialMaterial" id=2]
+[sub_resource type="SpatialMaterial" id=12]
 flags_transparent = true
 flags_unshaded = true
 params_cull_mode = 2
 params_billboard_mode = 2
 albedo_texture = ExtResource( 7 )
 
-[sub_resource type="PlaneMesh" id=3]
-material = SubResource( 2 )
+[sub_resource type="PlaneMesh" id=13]
+material = SubResource( 12 )
 size = Vector2( 1, 1 )
 
-[sub_resource type="CapsuleMesh" id=4]
+[sub_resource type="CapsuleMesh" id=14]
 
-[sub_resource type="Animation" id=5]
-resource_name = "move"
+[sub_resource type="SphereMesh" id=15]
+radius = 0.1
+height = 0.2
+
+[sub_resource type="SpatialMaterial" id=16]
+albedo_color = Color( 0.0431373, 0, 0.109804, 1 )
+emission_enabled = true
+emission = Color( 0.063, 0.9, 0.5094, 1 )
+emission_energy = 1.6
+emission_operator = 0
+emission_on_uv2 = false
+
+[sub_resource type="Animation" id=17]
 length = 3.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("Camera:distance")
@@ -115,7 +127,7 @@ margin_top = -208.111
 margin_right = 103.0
 margin_bottom = -163.111
 size_flags_horizontal = 0
-custom_fonts/font = SubResource( 12 )
+custom_fonts/font = SubResource( 5 )
 text = "Cyberfarm"
 align = 1
 valign = 1
@@ -128,7 +140,7 @@ margin_left = 47.5
 margin_top = 393.361
 margin_right = 113.5
 margin_bottom = 429.361
-custom_fonts/font = SubResource( 13 )
+custom_fonts/font = SubResource( 6 )
 text = "Quit"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -139,7 +151,7 @@ margin_left = 158.5
 margin_top = 393.361
 margin_right = 260.5
 margin_bottom = 429.361
-custom_fonts/font = SubResource( 13 )
+custom_fonts/font = SubResource( 6 )
 text = "Credits"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -150,7 +162,7 @@ margin_left = 299.721
 margin_top = 393.361
 margin_right = 373.721
 margin_bottom = 429.361
-custom_fonts/font = SubResource( 13 )
+custom_fonts/font = SubResource( 6 )
 text = "Play"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -166,7 +178,7 @@ margin_top = -161.0
 margin_right = 111.5
 margin_bottom = -122.0
 size_flags_horizontal = 0
-custom_fonts/font = SubResource( 11 )
+custom_fonts/font = SubResource( 8 )
 text = "Made By: Kevin Smith"
 align = 1
 valign = 1
@@ -175,21 +187,21 @@ __meta__ = {
 }
 
 [node name="GridContainer" type="GridContainer" parent="MainPanel"]
-visible = false
-margin_left = 122.5
-margin_top = 87.5
-margin_right = 423.5
-margin_bottom = 129.5
+margin_left = 57.5
+margin_top = 329.5
+margin_right = 358.5
+margin_bottom = 371.5
 columns = 2
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="DifficultyLabel" type="Label" parent="MainPanel/GridContainer"]
+visible = false
 margin_right = 78.0
 margin_bottom = 19.0
 size_flags_horizontal = 0
-custom_fonts/font = SubResource( 9 )
+custom_fonts/font = SubResource( 10 )
 text = "Difficulty"
 align = 1
 valign = 1
@@ -198,7 +210,8 @@ __meta__ = {
 }
 
 [node name="DifficultySlider" type="HSlider" parent="MainPanel/GridContainer"]
-margin_left = 82.0
+visible = false
+margin_left = 108.0
 margin_right = 301.0
 margin_bottom = 16.0
 grow_horizontal = 2
@@ -206,17 +219,37 @@ size_flags_horizontal = 3
 min_value = -32.0
 max_value = 16.0
 
+[node name="SkipTutorial" type="Label" parent="MainPanel/GridContainer"]
+margin_top = 2.0
+margin_right = 104.0
+margin_bottom = 21.0
+size_flags_horizontal = 0
+custom_fonts/font = SubResource( 10 )
+text = "Skip Tutorial"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TutorialOption" type="CheckBox" parent="MainPanel/GridContainer"]
+margin_left = 108.0
+margin_right = 301.0
+margin_bottom = 24.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+
 [node name="TipsLabel" type="Label" parent="MainPanel"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -66.0
-margin_top = -92.2944
+margin_top = -100.294
 margin_right = 66.0
-margin_bottom = -47.2944
+margin_bottom = -55.2944
 size_flags_horizontal = 0
-custom_fonts/font = SubResource( 12 )
+custom_fonts/font = SubResource( 5 )
 text = "Tips"
 align = 1
 valign = 1
@@ -230,11 +263,11 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -231.0
-margin_top = -43.0
+margin_top = -72.0
 margin_right = 229.0
-margin_bottom = 132.0
+margin_bottom = 103.0
 size_flags_horizontal = 0
-custom_fonts/font = SubResource( 11 )
+custom_fonts/font = SubResource( 8 )
 text = "Grow plants, destroy drones, buy upgrades.
 
 Space: Place plant
@@ -273,7 +306,7 @@ margin_top = -208.111
 margin_right = 103.0
 margin_bottom = -163.111
 size_flags_horizontal = 0
-custom_fonts/font = SubResource( 12 )
+custom_fonts/font = SubResource( 5 )
 text = "Credits"
 align = 1
 valign = 1
@@ -286,7 +319,7 @@ margin_left = 158.5
 margin_top = 393.361
 margin_right = 260.5
 margin_bottom = 429.361
-custom_fonts/font = SubResource( 13 )
+custom_fonts/font = SubResource( 6 )
 text = "Back"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -302,7 +335,7 @@ margin_top = -147.0
 margin_right = 229.0
 margin_bottom = 28.0
 size_flags_horizontal = 0
-custom_fonts/font = SubResource( 11 )
+custom_fonts/font = SubResource( 8 )
 text = "Music:
 Source: https://soundcloud.com/punch-deck
 License: CC BY 3.0
@@ -321,8 +354,8 @@ transform = Transform( 1, 0, 0, 0, -2.98023e-08, 1, 0, -1, -2.98023e-08, 0, 32.4
 amount = 1024
 visibility_aabb = AABB( -47.45, -46.61, -71.8189, 100, 100, 134.422 )
 local_coords = false
-process_material = SubResource( 1 )
-draw_pass_1 = SubResource( 3 )
+process_material = SubResource( 11 )
+draw_pass_1 = SubResource( 13 )
 script = ExtResource( 6 )
 
 [node name="RainSound" type="AudioStreamPlayer" parent="Rain"]
@@ -343,12 +376,31 @@ angle_degrees = 20.0
 "player",
 ]]
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -1.62891, 0, -2.415 )
-mesh = SubResource( 4 )
+mesh = SubResource( 14 )
 material/0 = null
+
+[node name="umbrella" parent="Player" instance=ExtResource( 15 )]
+transform = Transform( -0.17272, 0.0752403, -0.982093, 0.984971, 0.0131938, -0.172215, -4.30545e-08, -0.997078, -0.0763884, -0.206051, 1.11068, -4.85495e-08 )
+
+[node name="Open" parent="Player/umbrella" index="0"]
+transform = Transform( 1, -7.45058e-09, -1.49012e-08, -6.51926e-09, 0.951025, 0.309117, 0, -0.309117, 0.951025, -2.07554, 0.0596434, -0.778509 )
+
+[node name="Sphere" parent="Player/umbrella" index="2"]
+visible = false
+
+[node name="Eyes" type="MeshInstance" parent="Player"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.884682, -0.129933, -1.02377 )
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
+
+[node name="Eyes2" type="MeshInstance" parent="Player"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.634501, 0.575978, -1.01888 )
+mesh = SubResource( 15 )
+material/0 = SubResource( 16 )
 
 [node name="CameraAnimation" type="AnimationPlayer" parent="."]
 autoplay = "move"
-anims/move = SubResource( 5 )
+anims/move = SubResource( 17 )
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 48.6215, 0 )
@@ -449,4 +501,7 @@ fruit = true
 [connection signal="pressed" from="MainPanel/Quit" to="MainPanel" method="_on_Quit_pressed"]
 [connection signal="pressed" from="MainPanel/Credits" to="MainPanel" method="_on_Credits_pressed"]
 [connection signal="pressed" from="MainPanel/Play" to="MainPanel" method="_on_Play_pressed"]
+[connection signal="pressed" from="MainPanel/GridContainer/TutorialOption" to="MainPanel" method="_on_TutorialOption_pressed"]
 [connection signal="pressed" from="CreditsPanel/Back" to="MainPanel" method="_on_Back_pressed"]
+
+[editable path="Player/umbrella"]

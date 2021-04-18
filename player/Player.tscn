@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://player/Player.gd" type="Script" id=1]
 [ext_resource path="res://assets/sfx/player/synth_beep_02.ogg" type="AudioStream" id=2]
+[ext_resource path="res://assets/umbrella/umbrella.glb" type="PackedScene" id=3]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.75
@@ -33,6 +34,45 @@ radius = 3.0
 radius = 0.75
 height = 1.5
 
+[sub_resource type="Animation" id=8]
+resource_name = "wave"
+length = 0.5
+loop = true
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath("umbrella:rotation_degrees")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.14, 0.38 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 0, -7 ), Vector3( 0, 0, 7 ) ]
+}
+
+[sub_resource type="Curve" id=9]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.404545 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=10]
+curve = SubResource( 9 )
+
+[sub_resource type="ParticlesMaterial" id=11]
+emission_shape = 1
+emission_sphere_radius = 0.3
+direction = Vector3( 0, 1, 1 )
+spread = 16.2
+gravity = Vector3( 0, 1, 1 )
+initial_velocity = 5.0
+damping = 48.0
+scale_random = 0.39
+scale_curve = SubResource( 10 )
+
+[sub_resource type="SphereMesh" id=12]
+radius = 0.2
+height = 0.4
+
 [node name="Player" type="KinematicBody" groups=[
 "player",
 ]]
@@ -43,19 +83,24 @@ script = ExtResource( 1 )
 transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
 shape = SubResource( 1 )
 
-[node name="MeshInstance" type="MeshInstance" parent="."]
-transform = Transform( 1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0 )
+[node name="Feet" type="Position3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.50746, 0 )
+
+[node name="MeshInstance" type="MeshInstance" parent="Feet"]
+transform = Transform( 0.996195, 0.0871557, 0, 3.8097e-09, -4.35451e-08, -1, -0.0871557, 0.996195, -4.37114e-08, 0, 1.50746, 0 )
 mesh = SubResource( 2 )
 material/0 = null
 
 [node name="DebugHeading" type="Spatial" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.54442, -0.5 )
+visible = false
 
 [node name="MeshInstance" type="MeshInstance" parent="DebugHeading"]
 mesh = SubResource( 3 )
 material/0 = null
 
 [node name="DebugTarget" type="MeshInstance" parent="."]
+visible = false
 mesh = SubResource( 4 )
 material/0 = SubResource( 5 )
 
@@ -76,6 +121,29 @@ shape = SubResource( 7 )
 stream = ExtResource( 2 )
 volume_db = -8.0
 
+[node name="umbrella" parent="." instance=ExtResource( 3 )]
+transform = Transform( 0.992546, -0.121869, 0, 0.121869, 0.992546, 0, 0, 0, 1, -0.000878438, -0.05935, 0 )
+
+[node name="Closed" parent="umbrella" index="1"]
+transform = Transform( 0.976134, -0.217172, -7.45058e-09, -1.49012e-08, -4.28408e-08, 1, -0.217172, -0.976133, -4.26682e-08, 0.714676, 4.47035e-08, -0.279811 )
+
+[node name="Sphere" parent="umbrella" index="2"]
+transform = Transform( 0.951057, -0.309017, 0, 0.309017, 0.951057, 0, 0, 0, 1, 0, 0, 0 )
+visible = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/wave = SubResource( 8 )
+
+[node name="Particles" type="Particles" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00526285, -1.47145, 0.000458062 )
+amount = 4
+lifetime = 0.2
+local_coords = false
+process_material = SubResource( 11 )
+draw_pass_1 = SubResource( 12 )
+
 [connection signal="body_entered" from="Hitbox" to="." method="_on_Hitbox_body_entered"]
 [connection signal="body_exited" from="Hitbox" to="." method="_on_Hitbox_body_exited"]
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_Hurtbox_area_entered"]
+
+[editable path="umbrella"]

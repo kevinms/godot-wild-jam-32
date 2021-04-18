@@ -1,0 +1,12 @@
+[gd_resource type="SpatialMaterial" format=2]
+
+[resource]
+resource_name = "Top"
+vertex_color_use_as_albedo = true
+params_cull_mode = 2
+albedo_color = Color( 0.603922, 0.545098, 0.905882, 0.462745 )
+metallic = 0.77
+roughness = 0.04
+refraction_enabled = true
+refraction_scale = 0.13
+refraction_texture_channel = 0
