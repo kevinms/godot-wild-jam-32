@@ -37,11 +37,11 @@ func global_mouse_dir() -> Vector3:
 
 func adjust_visuals(input_dir: Vector3):
 	# Lean towards direction of movement
-	var axis = input_dir.cross(Vector3.UP)
-	var angle = PI/4
-	var up = Vector3.ZERO.rotated(axis, angle)
-	var target = up.cross(axis)
-	$Feet.look_at(target, up)
+#	var axis = input_dir.cross(Vector3.UP)
+#	var angle = PI/4
+#	var up = Vector3.ZERO.rotated(axis, angle)
+#	var target = up.cross(axis)
+#	$Feet.look_at(target, up)
 	
 	# Wave bumbershoot around
 	if input_dir != Vector3.ZERO:
@@ -77,6 +77,7 @@ var fire_rate: float = 0.2
 var time_since_last_fire: float = 0.0
 
 signal place_a_plant()
+signal place_a_turret()
 
 func _process(delta):
 	if dead:
@@ -107,6 +108,8 @@ func _process(delta):
 			feed.pos = global_transform.origin
 			feed.pos.y = -1.4
 			root.add_child(feed)
+	elif Input.is_action_just_pressed("turret"):
+		emit_signal("place_a_turret")
 
 onready var feed_scene = preload("res://feed/Feed.tscn")
 onready var laser_scene = preload("res://player/Laser.tscn")

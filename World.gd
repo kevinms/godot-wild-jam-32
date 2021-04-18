@@ -3,6 +3,7 @@ extends Spatial
 const plant_distance = 3.0
 
 onready var plant_scene = preload("res://plant/PlantMesh.tscn")
+onready var turret_scene = preload("res://turret/Turret.tscn")
 onready var player = $Player
 onready var cursor = preload("res://assets/cursor/cursor.png")
 onready var camera = $Camera
@@ -143,3 +144,24 @@ func game_over():
 
 func _on_Global_player_died():
 	game_over()
+
+
+func _on_Player_place_a_turret():
+	if Global.tutorial and Global.tutorial_step < 5:
+		return
+	
+	if !Global.buy_turret():
+		return
+	
+	Global.turrets_placed += 1
+	
+	var doot_pos = global_transform.origin + Vector3.UP * 3 + Vector3.RIGHT * 4
+	var duration = 0.5
+	Global.new_doot("-" + str(Global.turret_price) + " gold", doot_pos, 0.6, duration, Global.DOOT_NONE, true)
+	
+	var offset = -player.global_transform.basis.z * plant_distance
+	var pos = player.global_transform.origin + offset
+
+	var turret = turret_scene.instance()
+	turret.global_transform.origin = pos
+	add_child(turret)

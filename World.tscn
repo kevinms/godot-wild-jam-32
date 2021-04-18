@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=2]
+[gd_scene load_steps=40 format=2]
 
 [ext_resource path="res://Camera.gd" type="Script" id=1]
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://plant/PlantMesh.tscn" type="PackedScene" id=7]
 [ext_resource path="res://World.gd" type="Script" id=8]
 [ext_resource path="res://hud/HUD.tscn" type="PackedScene" id=9]
+[ext_resource path="res://turret/Turret.tscn" type="PackedScene" id=10]
 [ext_resource path="res://pickups/Ammo.tscn" type="PackedScene" id=11]
 [ext_resource path="res://plant/StaticPlant.tscn" type="PackedScene" id=12]
 [ext_resource path="res://ItemDrop.gd" type="Script" id=13]
@@ -575,6 +576,10 @@ fruit = true
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 38.5571, -0.755278, -15.5071 )
 pH = 3.0
 
+[node name="Turret" parent="." instance=ExtResource( 10 )]
+transform = Transform( 0.806207, 0, -0.591633, 0, 1, 0, 0.591633, 0, 0.806207, -7.39286, -1.87912, -9.59452 )
+
 [connection signal="pressed" from="GameOverPanel/Menu" to="GameOverPanel" method="_on_Menu_pressed"]
 [connection signal="pressed" from="GameOverPanel/Restart" to="GameOverPanel" method="_on_Restart_pressed"]
 [connection signal="place_a_plant" from="Player" to="." method="_on_Player_place_a_plant"]
+[connection signal="place_a_turret" from="Player" to="." method="_on_Player_place_a_turret"]

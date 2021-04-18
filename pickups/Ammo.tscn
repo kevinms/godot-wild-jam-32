@@ -4,14 +4,14 @@
 [ext_resource path="res://assets/sfx/pickup/power_up_04.ogg" type="AudioStream" id=2]
 [ext_resource path="res://pickups/Ammo.gd" type="Script" id=3]
 
-[sub_resource type="BoxShape" id=1]
-extents = Vector3( 0.9, 0.9, 0.9 )
+[sub_resource type="BoxShape" id=7]
+extents = Vector3( 1.17294, 1.23555, 0.9 )
 
-[sub_resource type="Curve" id=2]
+[sub_resource type="Curve" id=8]
 _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), -2.99034, 0.0, 0, 0 ]
 
 [sub_resource type="CurveTexture" id=3]
-curve = SubResource( 2 )
+curve = SubResource( 8 )
 
 [sub_resource type="ParticlesMaterial" id=4]
 direction = Vector3( 0, 1, 0 )
@@ -42,7 +42,7 @@ script = ExtResource( 3 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.02988, 0 )
-shape = SubResource( 1 )
+shape = SubResource( 7 )
 
 [node name="PickupSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 2 )

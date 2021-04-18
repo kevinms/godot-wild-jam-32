@@ -15,24 +15,27 @@ var rain_ph: float = 2.0
 var tutorial_skip: bool = false
 
 var tutorial: bool = false
-var tutorial_no_acidification: bool = true
-var tutorial_step: int = -1
+var tutorial_no_acidification: bool
+var tutorial_step: int
 
-var max_health: float = 10
-var health: float = max_health
-var gold: int = 10
-var ammo: int = 5
-var drones_killed: int = 0
-var plants_died: int = 0
-var plants_harvested: int = 0
-var plants_planted: int = 0
-var ammo_picked_up: int = 0
+var max_health: float
+var health: float
+var gold: int
+var ammo: int
+var drones_killed: int
+var plants_died: int
+var plants_harvested: int
+var plants_planted: int
+var ammo_picked_up: int
+var hearts_picked_up: int
+var turrets_placed: int
 
 var player_dead: bool = false
 
-var plant_price = 5
-var fruit_price = 10
-var feed_price = 1
+var plant_price: int
+var fruit_price: int
+var feed_price: int
+var turret_price: int
 
 func reset():
 	# Let the Rain node set these
@@ -45,25 +48,36 @@ func reset():
 	
 	max_health = 10
 	health = max_health
-	gold = 5
+	gold = 30
 	ammo = 5
+	
 	drones_killed = 0
 	plants_died = 0
 	plants_harvested = 0
 	plants_planted = 0
 	ammo_picked_up = 0
+	hearts_picked_up = 0
+	turrets_placed = 0
 	
 	player_dead = false
 	
 	plant_price = 5
 	fruit_price = 10
 	feed_price = 1
+	turret_price = 15
 
 func buy_plant():
 	if gold < plant_price:
 		return false
 	
 	gold -= plant_price
+	return true
+
+func buy_turret():
+	if gold < turret_price:
+		return false
+	
+	gold -= turret_price
 	return true
 
 signal fruit_ready(plant)
