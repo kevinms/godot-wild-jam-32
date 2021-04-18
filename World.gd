@@ -115,7 +115,7 @@ func tutorial(delta):
 			$Tip/Label.text = "Shoot the drone [Left Click] while dodging lasers."
 			$DroneSpawner.spawn_drone()
 		8:
-			$Tip/Label.text = "I've given you a bunch of gold. Press [Q] to buy a turret for " + str(Global.turret_price) + " gold."
+			$Tip/Label.text = "Press [Q] to buy a turret for " + str(Global.turret_price) + " gold. They last 60 seconds."
 			Global.gold = 35
 			$DroneSpawner.spawn_drone()
 			$DroneSpawner.spawn_drone()
