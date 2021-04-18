@@ -27,7 +27,6 @@ func _on_Tween_tween_all_completed():
 #	$Tween.interpolate_property(cylinder, "height", 50.0, 0, time_vertical, Tween.TRANS_LINEAR, Tween.EASE_IN)
 #	$Tween.start()
 
-	print("asdofijasoifjaosidfj")
 	var particles_material: ParticlesMaterial = $Particles.process_material
 	var scale_curve: CurveTexture = particles_material.scale_curve
 	var curve = scale_curve.curve

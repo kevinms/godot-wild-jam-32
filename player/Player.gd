@@ -132,7 +132,7 @@ func global_input_dir() -> Vector3:
 	return dir
 
 func harvest(plant):
-	print("harvesting")
+	#print("harvesting")
 	if !plant.harvest():
 		return
 	
@@ -144,7 +144,7 @@ func harvest(plant):
 
 func _on_Hitbox_body_entered(body):
 	if body.is_in_group("plant"):
-		print("plant in range", body.get_path())
+		#print("plant in range", body.get_path())
 		var plant = body
 		#plant.set_ph(7.0)
 		

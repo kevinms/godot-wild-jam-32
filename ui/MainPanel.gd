@@ -22,4 +22,4 @@ func _on_Back_pressed():
 
 func _on_TutorialOption_pressed():
 	Global.tutorial_skip = $GridContainer/TutorialOption.pressed
-	print("skip ", Global.tutorial_skip)
+	#print("skip ", Global.tutorial_skip)
