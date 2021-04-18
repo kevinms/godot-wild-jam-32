@@ -96,7 +96,7 @@ func tutorial(delta):
 			Global.tutorial_no_acidification = false
 			$PlantTut.process_stage()
 		2:
-			$Tip/Label.text = "Run to me [WASD] and keep me alive by feeding me a pH up solution [Space]."
+			$Tip/Label.text = "Run to me [WASD] and keep me alive by feeding a pH up solution [Space]."
 		3:
 			$Tip/Label.text = "Eventually I will produce a fruit."
 		4:
@@ -112,9 +112,17 @@ func tutorial(delta):
 			$Tip/Label.text = "Shoot the drone [Left Click] while dodging lasers."
 			$DroneSpawner.spawn_drone()
 		8:
-			$Tip/Label.text = "Great job!\n\nSee how many plants you can harvest without dying. Good luck."
+			$Tip/Label.text = "I've given you a bunch of gold. Press [Q] to buy a turret for " + str(Global.turret_price) + " gold."
+			Global.gold = 35
+			$DroneSpawner.spawn_drone()
+			$DroneSpawner.spawn_drone()
 		9:
+			$Tip/Label.text = "Great job!\n\nSee how many plants you can harvest without dying. Good luck."
+		10:
 			Global.tutorial = false
+			Global.health = 10
+			Global.gold = 25
+			Global.ammo = 5
 			$Tip.queue_free()
 
 func _on_Player_place_a_plant():

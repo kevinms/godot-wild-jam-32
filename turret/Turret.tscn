@@ -1,12 +1,20 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://assets/turret/turret-tripod.glb" type="PackedScene" id=1]
 [ext_resource path="res://assets/turret/turret-gun.glb" type="PackedScene" id=2]
 [ext_resource path="res://turret/Turret.gd" type="Script" id=3]
+[ext_resource path="res://assets/font/rainyhearts.ttf" type="DynamicFontData" id=4]
 
 [sub_resource type="CapsuleShape" id=1]
 radius = 0.897092
 height = 2.11383
+
+[sub_resource type="DynamicFont" id=3]
+size = 24
+font_data = ExtResource( 4 )
+
+[sub_resource type="ViewportTexture" id=2]
+viewport_path = NodePath("Viewport")
 
 [node name="Turret" type="StaticBody"]
 script = ExtResource( 3 )
@@ -25,3 +33,31 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.11514, 0 )
 
 [node name="turret-gun" parent="Gun" instance=ExtResource( 2 )]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -2.39447, 0 )
+
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="Viewport" type="Viewport" parent="."]
+size = Vector2( 50, 25 )
+transparent_bg = true
+usage = 0
+render_target_v_flip = true
+gui_disable_input = true
+
+[node name="Label" type="Label" parent="Viewport"]
+margin_right = 50.0
+margin_bottom = 25.0
+custom_fonts/font = SubResource( 3 )
+text = "60"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform( 4.35676, 0, 0, 0, 4.35676, 0, 0, 0, 4.35676, -1.36023, 4.46561, -1.53343 )
+billboard = 1
+texture = SubResource( 2 )
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=2]
+[gd_scene load_steps=48 format=2]
 
 [ext_resource path="res://hud/AcidMeter.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/font/rainyhearts.ttf" type="DynamicFontData" id=2]
@@ -31,6 +31,7 @@
 [ext_resource path="res://assets/acidmeter/acid-meter.png" type="Texture" id=29]
 [ext_resource path="res://assets/acidmeter/particle.png" type="Texture" id=30]
 [ext_resource path="res://assets/sfx/hud/terminal_04.ogg" type="AudioStream" id=31]
+[ext_resource path="res://hud/Market.gd" type="Script" id=32]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.0588235, 0.0980392, 0.160784, 0.588235 )
@@ -91,6 +92,9 @@ animations = [ {
 "name": "default",
 "speed": 6.0
 } ]
+
+[sub_resource type="DynamicFont" id=15]
+font_data = ExtResource( 2 )
 
 [sub_resource type="StyleBoxFlat" id=6]
 bg_color = Color( 0.0588235, 0.0980392, 0.160784, 0.588235 )
@@ -346,8 +350,81 @@ __meta__ = {
 position = Vector2( 18.7047, 13.9793 )
 scale = Vector2( 0.674971, 0.674971 )
 frames = SubResource( 5 )
-frame = 1
+frame = 2
 playing = true
+
+[node name="Market" type="Panel" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = 320.0
+margin_right = 447.0
+margin_bottom = 34.0
+custom_styles/panel = SubResource( 3 )
+script = ExtResource( 32 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlantLabel" type="Label" parent="Market"]
+margin_left = 6.87518
+margin_top = -0.00944138
+margin_right = 60.8752
+margin_bottom = 14.9906
+custom_fonts/font = SubResource( 15 )
+text = "[E]  Plant"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlantPrice" type="Label" parent="Market"]
+margin_left = 79.1088
+margin_top = -0.00944138
+margin_right = 112.109
+margin_bottom = 14.9906
+custom_fonts/font = SubResource( 15 )
+text = "22"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="Market"]
+margin_left = 100.999
+margin_top = -2.18268
+margin_right = 164.999
+margin_bottom = 61.8173
+rect_scale = Vector2( 0.3, 0.3 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource( 8 )
+
+[node name="TurretLabel" type="Label" parent="Market"]
+margin_left = 6.54614
+margin_top = 14.8221
+margin_right = 70.5461
+margin_bottom = 29.8221
+custom_fonts/font = SubResource( 15 )
+text = "[Q] Turret"
+
+[node name="TurretPrice" type="Label" parent="Market"]
+margin_left = 79.0067
+margin_top = 14.7519
+margin_right = 112.007
+margin_bottom = 29.7519
+custom_fonts/font = SubResource( 15 )
+text = "22"
+
+[node name="TextureRect2" type="TextureRect" parent="Market"]
+margin_left = 101.197
+margin_top = 12.8976
+margin_right = 165.197
+margin_bottom = 76.8976
+rect_scale = Vector2( 0.3, 0.3 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="HealthMeter" type="Panel" parent="."]
 anchor_left = 0.5
@@ -372,7 +449,6 @@ margin_left = -49.1091
 margin_top = -12.3954
 margin_right = 90.8909
 margin_bottom = 15.6046
-rect_scale = Vector2( 1.00359, 1.00359 )
 rect_pivot_offset = Vector2( 69.9091, 14.2512 )
 value = 50.0
 texture_under = ExtResource( 21 )
@@ -388,7 +464,6 @@ anims/pulse = SubResource( 7 )
 position = Vector2( 28.712, 27.9128 )
 scale = Vector2( 0.959882, 0.959882 )
 frames = SubResource( 8 )
-frame = 3
 playing = true
 
 [connection signal="tween_all_completed" from="Acid/Rainbow/Tween" to="Acid/Rainbow" method="_on_Tween_tween_all_completed"]

@@ -5,12 +5,20 @@ var next_fire = fire_rate
 
 onready var laser_scene = preload("res://player/Laser.tscn")
 onready var gun = $Gun
+onready var label = $Viewport/Label
 
+var life_remaining: float = 60
 var target_path: String
 var locking_start_transform: Transform
 var slerp_weight: float = 0.0
 
+func _ready():
+	$Timer.start(life_remaining)
+
 func _physics_process(delta):
+	life_remaining = max(life_remaining - delta, 0)
+	label.text = str(int(life_remaining))
+	
 	var target = pick_a_drone()
 	if target == null:
 		return
@@ -68,3 +76,7 @@ func pick_a_drone() -> Spatial:
 		return drone
 	
 	return null
+
+
+func _on_Timer_timeout():
+	queue_free()
