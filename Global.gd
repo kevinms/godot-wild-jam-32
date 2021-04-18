@@ -22,6 +22,7 @@ var max_health: float
 var health: float
 var gold: int
 var ammo: int
+var time_survived: float
 var drones_killed: int
 var plants_died: int
 var plants_harvested: int
@@ -29,6 +30,7 @@ var plants_planted: int
 var ammo_picked_up: int
 var hearts_picked_up: int
 var turrets_placed: int
+var gold_acquired: int
 
 var player_dead: bool = false
 
@@ -51,6 +53,7 @@ func reset():
 	gold = 30
 	ammo = 5
 	
+	time_survived = 0
 	drones_killed = 0
 	plants_died = 0
 	plants_harvested = 0
@@ -58,6 +61,7 @@ func reset():
 	ammo_picked_up = 0
 	hearts_picked_up = 0
 	turrets_placed = 0
+	gold_acquired = 0
 	
 	player_dead = false
 	
@@ -65,6 +69,10 @@ func reset():
 	fruit_price = 10
 	feed_price = 1
 	turret_price = 15
+
+func add_gold(amount):
+	gold += amount
+	gold_acquired += amount
 
 func buy_plant():
 	if gold < plant_price:
@@ -78,6 +86,13 @@ func buy_turret():
 		return false
 	
 	gold -= turret_price
+	return true
+
+func buy_feed():
+	if gold < feed_price:
+		return false
+	
+	gold -= feed_price
 	return true
 
 signal fruit_ready(plant)

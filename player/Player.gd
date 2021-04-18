@@ -95,9 +95,7 @@ func _process(delta):
 	elif Input.is_action_just_pressed("plant"):
 		emit_signal("place_a_plant")
 	elif Input.is_action_just_pressed("feed"):
-		if Global.gold >= Global.feed_price:
-			Global.gold -= Global.feed_price
-			
+		if Global.buy_feed():
 			var doot_pos = global_transform.origin + Vector3.UP * 3 + Vector3.RIGHT * 4
 			var duration = 0.5
 			Global.new_doot("-1 gold", doot_pos, 0.6, duration, Global.DOOT_NONE, true)
@@ -138,7 +136,7 @@ func harvest(plant):
 	if !plant.harvest():
 		return
 	
-	Global.gold += Global.fruit_price
+	Global.add_gold(Global.fruit_price)
 	
 	var doot_pos = global_transform.origin + Vector3.UP * 3 + Vector3.FORWARD * 4
 	var duration = 0.5

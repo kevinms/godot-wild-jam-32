@@ -287,13 +287,13 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -90.5
+margin_left = -94.7045
 margin_top = -139.0
-margin_right = 89.5
+margin_right = 96.2955
 margin_bottom = -94.0
 size_flags_horizontal = 0
 custom_fonts/font = SubResource( 4 )
-text = "Score:"
+text = "Score Card:"
 align = 1
 valign = 1
 __meta__ = {
@@ -316,19 +316,19 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="KilledLabel" type="Label" parent="GameOverPanel/GridContainer"]
-margin_right = 122.0
+[node name="TimeLabel" type="Label" parent="GameOverPanel/GridContainer"]
+margin_right = 128.0
 margin_bottom = 22.0
 size_flags_horizontal = 0
 custom_fonts/font = SubResource( 6 )
-text = "Drones Killed:"
+text = "Time Survived:"
 align = 1
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Killed" type="Label" parent="GameOverPanel/GridContainer"]
+[node name="Time" type="Label" parent="GameOverPanel/GridContainer"]
 margin_left = 158.0
 margin_right = 176.0
 margin_bottom = 22.0
@@ -341,13 +341,40 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="GoldLabel" type="Label" parent="GameOverPanel/GridContainer"]
+[node name="KilledLabel" type="Label" parent="GameOverPanel/GridContainer"]
 margin_top = 26.0
-margin_right = 42.0
+margin_right = 122.0
 margin_bottom = 48.0
 size_flags_horizontal = 0
 custom_fonts/font = SubResource( 6 )
-text = "Gold:"
+text = "Drones Killed:"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Killed" type="Label" parent="GameOverPanel/GridContainer"]
+margin_left = 158.0
+margin_top = 26.0
+margin_right = 176.0
+margin_bottom = 48.0
+size_flags_horizontal = 0
+custom_fonts/font = SubResource( 6 )
+text = "45"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GoldLabel" type="Label" parent="GameOverPanel/GridContainer"]
+margin_top = 52.0
+margin_right = 124.0
+margin_bottom = 74.0
+size_flags_horizontal = 0
+custom_fonts/font = SubResource( 6 )
+text = "Gold Acquired:"
 align = 1
 valign = 1
 __meta__ = {
@@ -356,9 +383,9 @@ __meta__ = {
 
 [node name="Gold" type="Label" parent="GameOverPanel/GridContainer"]
 margin_left = 158.0
-margin_top = 26.0
+margin_top = 52.0
 margin_right = 188.0
-margin_bottom = 48.0
+margin_bottom = 74.0
 size_flags_horizontal = 0
 custom_fonts/font = SubResource( 6 )
 text = "290"
@@ -369,9 +396,9 @@ __meta__ = {
 }
 
 [node name="PlantsDiedLabel" type="Label" parent="GameOverPanel/GridContainer"]
-margin_top = 52.0
+margin_top = 78.0
 margin_right = 104.0
-margin_bottom = 74.0
+margin_bottom = 100.0
 size_flags_horizontal = 0
 custom_fonts/font = SubResource( 6 )
 text = "Plants Died:"
@@ -383,9 +410,9 @@ __meta__ = {
 
 [node name="PlantsDied" type="Label" parent="GameOverPanel/GridContainer"]
 margin_left = 158.0
-margin_top = 52.0
+margin_top = 78.0
 margin_right = 168.0
-margin_bottom = 74.0
+margin_bottom = 100.0
 size_flags_horizontal = 0
 custom_fonts/font = SubResource( 6 )
 text = "3"
@@ -396,9 +423,9 @@ __meta__ = {
 }
 
 [node name="PlantsHarvestedLabel" type="Label" parent="GameOverPanel/GridContainer"]
-margin_top = 78.0
+margin_top = 104.0
 margin_right = 154.0
-margin_bottom = 100.0
+margin_bottom = 126.0
 size_flags_horizontal = 0
 custom_fonts/font = SubResource( 6 )
 text = "Plants Harvested:"
@@ -409,33 +436,6 @@ __meta__ = {
 }
 
 [node name="PlantsHarvested" type="Label" parent="GameOverPanel/GridContainer"]
-margin_left = 158.0
-margin_top = 78.0
-margin_right = 178.0
-margin_bottom = 100.0
-size_flags_horizontal = 0
-custom_fonts/font = SubResource( 6 )
-text = "92"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="PlantsPlantedLabel" type="Label" parent="GameOverPanel/GridContainer"]
-margin_top = 104.0
-margin_right = 132.0
-margin_bottom = 126.0
-size_flags_horizontal = 0
-custom_fonts/font = SubResource( 6 )
-text = "Plants Planted:"
-align = 1
-valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="PlantsPlanted" type="Label" parent="GameOverPanel/GridContainer"]
 margin_left = 158.0
 margin_top = 104.0
 margin_right = 178.0

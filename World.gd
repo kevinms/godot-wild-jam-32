@@ -41,6 +41,9 @@ func _ready():
 	$Ammo.visible = false
 
 func _process(delta):
+	if !Global.player_dead and !Global.tutorial:
+		Global.time_survived += delta
+	
 	if Input.is_action_just_pressed("restart"):
 		get_tree().reload_current_scene()
 	

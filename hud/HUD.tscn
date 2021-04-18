@@ -350,15 +350,15 @@ __meta__ = {
 position = Vector2( 18.7047, 13.9793 )
 scale = Vector2( 0.674971, 0.674971 )
 frames = SubResource( 5 )
-frame = 5
+frame = 4
 playing = true
 
 [node name="Market" type="Panel" parent="."]
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = 320.0
-margin_right = 447.0
-margin_bottom = 34.0
+margin_right = 469.0
+margin_bottom = 52.0
 custom_styles/panel = SubResource( 3 )
 script = ExtResource( 32 )
 __meta__ = {
@@ -377,9 +377,9 @@ __meta__ = {
 }
 
 [node name="PlantPrice" type="Label" parent="Market"]
-margin_left = 79.1088
+margin_left = 104.58
 margin_top = -0.00944138
-margin_right = 112.109
+margin_right = 137.58
 margin_bottom = 14.9906
 custom_fonts/font = SubResource( 15 )
 text = "22"
@@ -388,9 +388,9 @@ __meta__ = {
 }
 
 [node name="TextureRect" type="TextureRect" parent="Market"]
-margin_left = 100.999
+margin_left = 126.47
 margin_top = -2.18268
-margin_right = 164.999
+margin_right = 190.47
 margin_bottom = 61.8173
 rect_scale = Vector2( 0.3, 0.3 )
 size_flags_horizontal = 0
@@ -406,18 +406,47 @@ custom_fonts/font = SubResource( 15 )
 text = "[Q] Turret"
 
 [node name="TurretPrice" type="Label" parent="Market"]
-margin_left = 79.0067
+margin_left = 104.478
 margin_top = 14.7519
-margin_right = 112.007
+margin_right = 137.478
 margin_bottom = 29.7519
 custom_fonts/font = SubResource( 15 )
 text = "22"
 
 [node name="TextureRect2" type="TextureRect" parent="Market"]
-margin_left = 101.197
+margin_left = 126.668
 margin_top = 12.8976
-margin_right = 165.197
+margin_right = 190.668
 margin_bottom = 76.8976
+rect_scale = Vector2( 0.3, 0.3 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FeedLabel" type="Label" parent="Market"]
+margin_left = 6.54614
+margin_top = 31.4907
+margin_right = 70.5461
+margin_bottom = 46.4907
+custom_fonts/font = SubResource( 15 )
+text = "[Space] pH UP"
+
+[node name="FeedPrice" type="Label" parent="Market"]
+margin_left = 104.478
+margin_top = 31.4206
+margin_right = 137.478
+margin_bottom = 46.4206
+custom_fonts/font = SubResource( 15 )
+text = "22"
+
+[node name="FeedTexture" type="TextureRect" parent="Market"]
+margin_left = 126.668
+margin_top = 29.5663
+margin_right = 190.668
+margin_bottom = 93.5663
 rect_scale = Vector2( 0.3, 0.3 )
 size_flags_horizontal = 0
 size_flags_vertical = 0
