@@ -4,7 +4,7 @@ onready var drop_half_width = $DropPlane.mesh.size.x / 2
 onready var drone_scene = preload("res://drone/Drone.tscn")
 
 # Old
-var max_drones: int = 20
+var max_drones: int = 16
 
 
 var next_spawn: float = 5.0
